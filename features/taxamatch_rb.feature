@@ -14,5 +14,5 @@ Feature: Find if two scientific names are lexical variants of each other
   Scenario: find parts of a name in unicode
     Given a name "Arthopyrenia hyalospora (Banker) D. Hall 1988"
     When I run a parser from biodiversity gem
-    Then I should receive "ARTHOPYRENIA" as "genus_epitheton", "HYALOSPORA" as "species_epitheton", "Banker" and "D. Hall" as "authors", "1988" as a "year"
+    Then I should receive "ARTHOPYRENIA" as genus epithet, "HYALOSPORA" as species epithet, "Banker" and "D. Hall" as species authors, "1988" as a species year
 

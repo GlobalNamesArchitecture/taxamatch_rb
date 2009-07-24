@@ -26,11 +26,11 @@ When /^I run a parser from biodiversity gem$/ do
   parser = Parser.new
 end
 
-Then /^I should receive "([^\"]*)" as "([^\"]*)", "([^\"]*)" as "([^\"]*)", "([^\"]*)" and "([^\"]*)" as "([^\"]*)", "([^\"]*)" as a "([^\"]*)"$/ do |gen_val, gen, sp_val, sp, au_val1, au_val2, au, yr_val, yr|
-  res = parser.parse(name)
-  res[gen].should == gen_val
-  res[sp].should == sp_val
-  res[au].includes?(au_val1).should be_true
-  res[au].includes?(au_val2).should be_true
-  res[yr].should == yr_val  
+Then /^I should receive "([^\"]*)" as genus epithet, "([^\"]*)" as species epithet, "([^\"]*)" and "([^\"]*)" as species authors, "([^\"]*)" as a species year$/ do |gen_val, sp_val, au_val1, au_val2, yr_val|
+  res = parser.parse(sci_name)
+  res[:genus][:epitheton].should == gen_val
+  res[:species][:epitheton].should == sp_val
+  res[:species][:authors].include?(au_val1).should be_true
+  res[:species][:authors].include?(au_val2).should be_true
+  res[:species][:years].include?(yr_val).should be_true  
 end
