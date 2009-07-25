@@ -13,6 +13,11 @@ Feature: Find if two scientific names are lexical variants of each other
 
   Scenario: find parts of a name in unicode
     Given a name "Arthopyrenia hyalospora (Banker) D. Hall 1988"
-    When I run a parser from biodiversity gem
+    When I run a Parser function parse
     Then I should receive "ARTHOPYRENIA" as genus epithet, "HYALOSPORA" as species epithet, "Banker" and "D. Hall" as species authors, "1988" as a species year
+    
+  Scenario: create phonetic version of a string
+    Given a string 'BIFASCIATA'
+    When I run a Phonetizer function near_match
+    Then I should receive "BIFASATA" as a phonetic form of the word
 
