@@ -26,15 +26,17 @@ protected
     d = pr['details'][0]
     process_node(:uninomial, d['uninomial'])
     process_node(:genus, d['genus'])
-    process_node(:species, d['species'])
+    process_node(:species, d['species'], true)
     process_infraspecies(d['infraspecies'])
     @res.keys.size >= 0 ? @res : nil
   end
   
-  def process_node(name,node)
+  def process_node(name, node, is_species = false)
     return unless node
     @res[name] = {}
-    @res[name][:epitheton] = Normalizer.normalize(node['epitheton'])
+    @res[name][:epitheton] = node['epitheton']
+    @res[name][:normalized] = Normalizer.normalize(node['epitheton'])
+    @res[name][:phonetized] = Phonetizer.near_match(node['epitheton'], is_species)
     get_authors_years(node, @res[name])
   end
   
@@ -43,7 +45,9 @@ protected
     @res[:infraspecies] = []
     node.each do |infr|
       hsh = {}
-      hsh[:epitheton] = Normalizer.normalize(infr['epitheton'])
+      hsh[:epitheton] = infr['epitheton']
+      hsh[:normalized] = Normalizer.normalize(infr['epitheton'])
+      hsh[:phonetized] = Phonetizer.near_match(infr['epitheton'], true)
       get_authors_years(infr,hsh)
       @res[:infraspecies] << hsh
     end
