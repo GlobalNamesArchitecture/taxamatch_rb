@@ -3,11 +3,12 @@ require File.dirname(__FILE__) + '/spec_helper.rb'
 
 describe 'DamerauLevensteinMod' do
   it 'should get tests' do
-    read_test_file do |y|
+    read_test_file(File.expand_path(File.dirname(__FILE__)) + '/damerau_levenshtein_mod_test.txt', 5) do |y|
       dl = DamerauLevenshteinMod.new
-      unless y[:comment]
-        # puts "%s, %s, %s" % [y[:str1], y[:str2], y[:distance]]
-        dl.distance(y[:str1], y[:str2], y[:block_size], y[:max_dist]).should == y[:distance]
+      if y
+        res = dl.distance(y[0], y[1], y[3].to_i, y[2].to_i)
+        puts y if res != y[4].to_i
+        res.should == y[4].to_i
       end
     end
   end
@@ -53,6 +54,19 @@ describe 'Taxamatch' do
   before(:all) do
     @tm = Taxamatch.new
   end
+  
+  it 'should get txt tests' do
+    dl = DamerauLevenshteinMod.new
+    read_test_file(File.expand_path(File.dirname(__FILE__)) + '/taxamatch_test.txt', 3) do |y|
+      if y
+        y[2] = y[2] == 'true' ? true : false
+        res = @tm.taxamatch(y[0], y[1])
+        puts "%s, %s, %s" % [y[0], y[1], y[2]] if res != y[2]
+        res.should == y[2]
+      end
+    end
+  end
+  
   
   it 'should compare genera' do
     #edit distance 1 always match
@@ -162,7 +176,4 @@ describe 'Taxamatch' do
   end
 end
 
-def make_taxamatch_hash(string)
-  normalized = Normalizer.normalize(string)
-  {:epitheton => string, :normalized => normalized, :phonetized => Phonetizer.near_match(normalized)}
-end
+

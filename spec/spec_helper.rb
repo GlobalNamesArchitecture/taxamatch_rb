@@ -9,16 +9,20 @@ end
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'taxamatch_rb'
 
-def read_test_file
-  f = open(File.expand_path(File.dirname(__FILE__)) + '/damerau_levenshtein_mod_test.txt')
+def read_test_file(file, fields_num)
+  f = open(file)
   f.each do |line|
-    str1, str2, max_dist, block_size, distance = line.split("|")
-    if line.match(/^\s*#/) == nil && str1 && str2 && max_dist && block_size && distance
-      distance = distance.split('#')[0].strip
-      distance = (distance == 'null') ? nil : distance.to_i
-      yield({:str1 => str1, :str2 => str2, :max_dist => max_dist.to_i, :block_size => block_size.to_i, :distance => distance})
+    fields = line.split("|")
+    if line.match(/^\s*#/) == nil && fields.size == fields_num
+      fields[-1] = fields[-1].split('#')[0].strip
+      yield(fields)
     else
-      yield({:comment => line})
+      yield(nil)
     end
   end
+end
+
+def make_taxamatch_hash(string)
+  normalized = Normalizer.normalize(string)
+  {:epitheton => string, :normalized => normalized, :phonetized => Phonetizer.near_match(normalized)}
 end
