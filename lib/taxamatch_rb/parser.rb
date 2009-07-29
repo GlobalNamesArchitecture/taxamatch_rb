@@ -9,7 +9,7 @@ class Parser
   end
   
   def parse(name)
-    @res = {}
+    @res = {:all_authors => [], :all_years => []}
     @parsed_raw = JSON.load(@parser.parse(name).to_json)['scientificName']
     organize_results
   end
@@ -28,7 +28,9 @@ protected
     process_node(:genus, d['genus'])
     process_node(:species, d['species'], true)
     process_infraspecies(d['infraspecies'])
-    @res.keys.size >= 0 ? @res : nil
+    @res[:all_authors].uniq!
+    @res[:all_years].uniq!
+    @res.keys.size > 2 ? @res : nil
   end
   
   def process_node(name, node, is_species = false)
@@ -68,6 +70,8 @@ protected
     end
     res[:authors].uniq!
     res[:years].uniq!
+    @res[:all_authors] += res[:authors] if res[:authors].size > 0
+    @res[:all_years] += res[:years] if res[:years].size > 0
   end
 
 end

@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dmitry Mozzherin"]
-  s.date = %q{2009-07-24}
+  s.date = %q{2009-07-29}
   s.email = %q{dmozzherin@eol.org}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "features/development.feature",
      "features/step_definitions/common_steps.rb",
      "features/step_definitions/taxamatch_rb.rb",
      "features/support/common.rb",
@@ -28,11 +27,14 @@ Gem::Specification.new do |s|
      "features/taxamatch_rb.feature",
      "lib/taxamatch_rb.rb",
      "lib/taxamatch_rb/damerau_levenshtein_mod.rb",
+     "lib/taxamatch_rb/normalizer.rb",
      "lib/taxamatch_rb/parser.rb",
+     "lib/taxamatch_rb/phonetizer.rb",
      "spec/damerau_levenshtein_mod_test.txt",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/taxamatch_rb_spec.rb"
+     "spec/taxamatch_rb_spec.rb",
+     "taxamatch_rb.gemspec"
   ]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/dimus/taxamatch_rb}
@@ -50,14 +52,17 @@ Gem::Specification.new do |s|
     s.specification_version = 2
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<RailsInline>, [">= 0"])
+      s.add_runtime_dependency(%q<RubyInline>, [">= 0"])
       s.add_runtime_dependency(%q<unicode_utils>, [">= 0"])
+      s.add_runtime_dependency(%q<dimus-biodiversity>, [">= 0"])
     else
-      s.add_dependency(%q<RailsInline>, [">= 0"])
+      s.add_dependency(%q<RubyInline>, [">= 0"])
       s.add_dependency(%q<unicode_utils>, [">= 0"])
+      s.add_dependency(%q<dimus-biodiversity>, [">= 0"])
     end
   else
-    s.add_dependency(%q<RailsInline>, [">= 0"])
+    s.add_dependency(%q<RubyInline>, [">= 0"])
     s.add_dependency(%q<unicode_utils>, [">= 0"])
+    s.add_dependency(%q<dimus-biodiversity>, [">= 0"])
   end
 end
