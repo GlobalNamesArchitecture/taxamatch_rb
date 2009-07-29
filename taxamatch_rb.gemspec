@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{taxamatch_rb}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dmitry Mozzherin"]
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "features/support/matchers.rb",
      "features/taxamatch_rb.feature",
      "lib/taxamatch_rb.rb",
+     "lib/taxamatch_rb/authormatch.rb",
      "lib/taxamatch_rb/damerau_levenshtein_mod.rb",
      "lib/taxamatch_rb/normalizer.rb",
      "lib/taxamatch_rb/parser.rb",
@@ -34,6 +35,7 @@ Gem::Specification.new do |s|
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/taxamatch_rb_spec.rb",
+     "spec/taxamatch_test.txt",
      "taxamatch_rb.gemspec"
   ]
   s.has_rdoc = true
