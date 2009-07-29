@@ -55,4 +55,4 @@ trimerophyton|mertriophyton|10|3|3
 
 #it should stop trying if distance exceeds maximum allowed distance
 Pxxxxomus|Pomatomus|10|1|4
-Pxxxxomus|Pomatomus|2|1|null
+Pxxxxomus|Pomatomus|2|1|3

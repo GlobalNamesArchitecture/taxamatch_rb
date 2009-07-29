@@ -6,8 +6,7 @@ require 'time'
 class DamerauLevenshteinMod
   def distance(str1, str2, block_size=2, max_distance=10)
     # puts str1.unpack("U*");
-    res = distance_utf(str1.unpack("U*"), str2.unpack("U*"), block_size, max_distance)
-    (res > max_distance) ? nil : res
+    distance_utf(str1.unpack("U*"), str2.unpack("U*"), block_size, max_distance)
   end
 
   inline do |builder|

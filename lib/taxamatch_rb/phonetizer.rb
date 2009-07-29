@@ -61,8 +61,6 @@ class Phonetizer
     a_word
   end
     
-  protected
-    
   def self.normalize_ending(a_word)
       # -- deal with variant endings -is (includes -us, -ys, -es), -im (was -um), -as (-os)
       # -- at the end of a string translate all to -a
