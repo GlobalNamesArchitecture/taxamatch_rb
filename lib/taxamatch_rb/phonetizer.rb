@@ -44,8 +44,8 @@ class Phonetizer
       when /^X/
         a_word = 'Z' + a_word[1..-1]
     end
-    first_char = a_word[0]
-    rest_chars = a_word[1..-1]   
+    first_char = a_word.split('')[0]
+    rest_chars = a_word.split('')[1..-1].join('')   
     rest_chars.gsub!('AE', 'I')
     rest_chars.gsub!('IA', 'A')
     rest_chars.gsub!('OE', 'I')

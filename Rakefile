@@ -10,7 +10,6 @@ begin
     gem.homepage = "http://github.com/dimus/taxamatch_rb"
     gem.authors = ["Dmitry Mozzherin"]
     gem.add_dependency('RubyInline')
-    gem.add_dependency('unicode_utils')
     gem.add_dependency('dimus-biodiversity')
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
