@@ -25,13 +25,13 @@ end
 #############
 
 sci_name =  result = nil
-parser = Parser.new
+parser = TaxamatchParser.new
 
 Given /^a name "([^\"]*)"$/ do |arg1|
   sci_name = arg1
 end
 
-When /^I run a Parser function parse$/ do
+When /^I run a TaxamatchParser function parse$/ do
   result = parser.parse(sci_name)
 end
 
@@ -41,8 +41,6 @@ Then /^I should receive "([^\"]*)" as genus epithet, "([^\"]*)" as species epith
   result[:species][:authors].include?(au_val1).should be_true
   result[:species][:authors].include?(au_val2).should be_true
   result[:species][:years].include?(yr_val).should be_true  
-  require 'pp'
-  print result
 end
 
 #############
@@ -88,5 +86,39 @@ end
 
 Then /^I should receive "([^\"]*)" as a normalized phonetic form of the word$/ do |arg1|
   phonetized_word.should == arg1
+end
+
+name1 = name2 = match = nil
+tm=Taxamatch.new
+
+Given /^strings "([^\"]*)" and "([^\"]*)"$/ do |arg1, arg2|
+  name1 = arg1
+  name2 = arg2
+end
+
+When /^I run taxmatch method of Taxamatch class$/ do
+  match = tm.taxamatch(name1, name2)
+end
+
+Then /^I should see that these two names match$/ do
+  match.should be_true
+end
+
+auth1 = auth2 = yr1 = yr2 = match = nil
+au=Authmatch
+
+Given /^authors "([^\"]*)","([^\"]*)" with year "([^\"]*)" and authors "([^\"]*)" and year "([^\"]*)"$/ do |arg1, arg2, arg3, arg4, arg5|
+  auth1 = [arg1,arg2]
+  yr1 = [arg3]
+  auth2 = [arg4]
+  yr2 = [arg5]
+end
+
+When /^I ran Authormatch method compare_authorship$/ do
+  match = au.authmatch(auth1, auth2, yr1, yr2)
+end
+
+Then /^I should see that there is a match$/ do
+  match.should be_true
 end
 

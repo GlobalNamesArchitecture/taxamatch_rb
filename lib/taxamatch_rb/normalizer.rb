@@ -6,7 +6,7 @@ module Normalizer
   end
   
   def self.normalize_word(word)
-    self.normalize(word).gsub(/[^A-Z0-9\.\-]/, '')
+    self.normalize(word).gsub(/[^A-Z0-9\-]/, '')
   end
 
 protected

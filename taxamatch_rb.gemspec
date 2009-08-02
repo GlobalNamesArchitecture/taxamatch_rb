@@ -2,31 +2,20 @@
 
 Gem::Specification.new do |s|
   s.name = %q{taxamatch_rb}
-  s.version = "0.1.2"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dmitry Mozzherin"]
-  s.date = %q{2009-07-29}
+  s.date = %q{2009-08-02}
   s.email = %q{dmozzherin@eol.org}
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
   ]
   s.files = [
-    ".document",
-     ".gitignore",
-     "LICENSE",
-     "README.rdoc",
-     "Rakefile",
-     "VERSION",
-     "features/step_definitions/common_steps.rb",
-     "features/step_definitions/taxamatch_rb.rb",
-     "features/support/common.rb",
-     "features/support/env.rb",
-     "features/support/matchers.rb",
-     "features/taxamatch_rb.feature",
+    "README.rdoc",
      "lib/taxamatch_rb.rb",
-     "lib/taxamatch_rb/authormatch.rb",
+     "lib/taxamatch_rb/authmatch.rb",
      "lib/taxamatch_rb/damerau_levenshtein_mod.rb",
      "lib/taxamatch_rb/normalizer.rb",
      "lib/taxamatch_rb/parser.rb",
@@ -35,8 +24,7 @@ Gem::Specification.new do |s|
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/taxamatch_rb_spec.rb",
-     "spec/taxamatch_test.txt",
-     "taxamatch_rb.gemspec"
+     "spec/taxamatch_test.txt"
   ]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/dimus/taxamatch_rb}

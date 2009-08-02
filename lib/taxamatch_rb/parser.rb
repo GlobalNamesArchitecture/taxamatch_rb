@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'biodiversity'
 
-class Parser
+class TaxamatchParser
   def initialize
     @parser = ScientificNameParser.new
     @parsed_raw = nil
@@ -28,7 +28,7 @@ protected
     process_node(:genus, d['genus'])
     process_node(:species, d['species'], true)
     process_infraspecies(d['infraspecies'])
-    @res[:all_authors].uniq!
+    @res[:all_authors] = @res[:all_authors].uniq.map {|a| Normalizer.normalize(a)}
     @res[:all_years].uniq!
     @res.keys.size > 2 ? @res : nil
   end

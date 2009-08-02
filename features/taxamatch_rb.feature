@@ -4,7 +4,17 @@ Feature: Find if two scientific names are lexical variants of each other
   I want to be able to compare scientific names to determine if they are variants of the same name.
   And I want to be able to combine names that are the same into lexical groups, so they appear together in names list
   So I want to implement Tony Rees and Barbara Boehmer taxamatch algorithms http://bit.ly/boWyG
-
+  
+  Scenario: compare two scientific names if they match
+    Given strings "Betula verucosa L." and "Betula vericosa Linn."
+    When I run taxmatch method of Taxamatch class
+    Then I should see that these two names match
+    
+  Scenario: compare two authorships
+    Given authors "Linneaus","Muller" with year "1789" and authors "Linnaeus" and year "1780"
+    When I ran Authormatch method compare_authorship
+    Then I should see that there is a match
+    
 
   Scenario: find edit distance between two unicode (utf8) strings
     Given strings "Sjostedt" and "Sojstedt", transposition block size "1", and a maximum allowed distance "4"
@@ -13,7 +23,7 @@ Feature: Find if two scientific names are lexical variants of each other
 
   Scenario: find parts of a name in unicode
     Given a name "Arthopyrenia hyalospora (Banker) D. Hall 1988 hyalosporis Kutz 1999"
-    When I run a Parser function parse
+    When I run a TaxamatchParser function parse
     Then I should receive "Arthopyrenia" as genus epithet, "hyalospora" as species epithet, "Banker" and "D. Hall" as species authors, "1988" as a species year
     
   Scenario: normalize a string into ASCII upcase
@@ -30,4 +40,3 @@ Feature: Find if two scientific names are lexical variants of each other
     Given a word "bifasciatum"
     When I run a Phonetizer function near_match with an option normalize_ending
     Then I should receive "BIFASATA" as a normalized phonetic form of the word
-
