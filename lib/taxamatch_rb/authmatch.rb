@@ -1,86 +1,85 @@
 class Authmatch
 
   def self.authmatch(authors1, authors2, years1, years2)
-    return true
     unique_authors1, unique_authors2 = remove_duplicate_authors(authors1, authors2)
     year_difference = compare_years(years1, years2)
-  
-
-    #return get_score_author_comparison(authors1, unique_authors1, authors2, unique_authors2, year_difference, 50, true);
+    get_score(authors1, unique_authors1, authors2, unique_authors2, year_difference)
   end
   
-  def self.remove_duplicate_authors(author1, authors2)
-    au1_match = au2_match = false
-    au1_match.each do |au1|
-      match1 = false
-      au1_match.each do |au2|
-        match2 = false
+  def self.get_score(authors1, unique_authors1, authors2, unique_authors2, year_diff)
+    count_before = authors1.size + authors2.size
+    count_after = unique_authors1.size + unique_authors2.size
+    score = 0
+    if count_after == 0
+      if year_diff != nil
+        if year_diff == 0
+          score = 100
+        elsif year_diff == 1
+          score = 54  
+        end
+      else
+        score = 94
+      end
+    elsif unique_authors1.size > 0 || unique_authors2.size > 0
+      if year_diff != nil
+        if year_diff == 0
+          score = 91
+        elsif year_diff == 1
+          score = 51
+        end
+      else
+        score = 90
+      end
+    else
+      score = ((1 - count_after.to_f/count_before.to_f) * 100).round
+      score = 0 unless year_diff == nil || (year_diff && year_diff == 0)  
+    end
+    score > 50 ? score : 0
+  end
+  
+  def self.remove_duplicate_authors(authors1, authors2)
+    unique_authors1 = authors1.dup
+    unique_authors2 = authors2.dup
+    authors1.each do |au1|
+      au1_match = false
+      authors2.each do |au2|
+        au2_match = false
         if au1 == au2
-          match1 = match2 = true
-        elsif au1.size < au2.size
-          match1 = true if au1 == au2[0..au1.size]
-        elseif 
+          au1_match = au2_match = true if au1 == au2
+        elsif au1 == au2[0...au1.size]          
+          au1_match = true
+        elsif au1[0...au2.size] == au2
+          au2_match = true
+        end
+        if (au1.size >= 3 && au1_match) || (au2.size >= 3 && au2_match) || (au1_match && au2_match)
+          unique_authors1.delete au1
+          unique_authors2.delete au2
+        elsif au1_match
+          unique_authors1.delete au1
+        elsif au2_match
+          unique_authors2.delete au2
+        else 
+          if self.fuzzy_match_authors(au1, au2)
+            unique_authors1.delete au1
+            unique_authors2.delete au2
+          end
         end
       end
     end
+    [unique_authors1, unique_authors2]
+  end
+  
+  def self.fuzzy_match_authors(author1, author2)
+    au1_length = author1.size
+    au2_length = author2.size
+    dlm = DamerauLevenshteinMod.new
+    ed = dlm.distance(author1, author2,2,3)
+    (ed <= 3 && ([au1_length, au2_length].min > ed * 2) && (ed < 2 || author1[0] == author2[0]))
   end
 
   def self.compare_years(years1, years2)
     return 0 if years1 == [] && years2 == []
-    return (years1[0] - years2[0]).abs if years1.size == 1 && years2.size == 1
+    return (years1[0].to_i - years2[0].to_i).abs if years1.size == 1 && years2.size == 1
     nil
   end
 end
-
-=begin
-		foreach($author_words1 as $key1 => $author1)
-		{
-			$author1_matches = false;
-			$author1 = Normalize::normalize_author_string($author1);
-			foreach($author_words2 as $key2 => $author2)
-				{
-				$author2_matches = false;
-				$author2 = Normalize::normalize_author_string($author2);
-
-				if($author1 == $author2)
-				{
-					$author1_matches = true;
-					$author2_matches = true;
-				}elseif(preg_match("/^".preg_quote($author1, "/")."/i", $author2))
-				{
-					$author1_matches = true;
-				}elseif(preg_match("/^".preg_quote($author2, "/")."/i", $author1))
-				{
-					$author2_matches = true;
-				}
-
-				// equal or one is contained in the other, so consider it a match for both terms
-				if((strlen($author1)>=3 && $author1_matches) || (strlen($author2)>=3 && $author2_matches) || $author1 == $author2)
-				{
-					unset($unique_authors1[$key1]);
-					unset($unique_authors2[$key2]);
-				}elseif($author1_matches)
-				{
-					// author1 was abbreviation of author2
-					unset($unique_authors1[$key1]);
-				}elseif($author2_matches)
-				{
-				// author1 was abbreviation of author2
-					unset($unique_authors2[$key2]);
-				}else
-				{
-					// no match or abbreviation so try a fuzzy match
-					$max_length = max(strlen($author1), strlen($author2));
-					$lev = levenshtein($author1, $author2);
-					if(($lev/$max_length) <= .167)
-					{
-						unset($unique_authors1[$key1]);
-						unset($unique_authors2[$key2]);
-					}
-			}
-		}
-		reset($author_words2);
-	}
-	
-  
-=end

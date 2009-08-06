@@ -119,6 +119,6 @@ When /^I ran Authormatch method compare_authorship$/ do
 end
 
 Then /^I should see that there is a match$/ do
-  match.should be_true
+  match.should == 0
 end
 

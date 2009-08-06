@@ -180,11 +180,32 @@ describe 'Taxamatch' do
       @am = Authmatch
     end
     
+    it 'should calculate score' do
+      res = @am.authmatch(['Linnaeus', 'Muller'], ['L', 'Kenn'], [], [1788])
+      res.should == 90
+    end
+    
     it 'should compare years' do
       @am.compare_years([1882],[1880]).should == 2
       @am.compare_years([1882],[]).should == nil
       @am.compare_years([],[]).should == 0
       @am.compare_years([1788,1798], [1788,1798]).should be_nil
+    end
+    
+    it 'should remove duplicate authors' do 
+      #Li submatches Linnaeus and it its size 3 is big enought to remove Linnaeus
+      #Muller is identical
+      res = @am.remove_duplicate_authors(['Lin', 'Muller'], ['Linnaeus', 'Muller'])
+      res.should == [[], []]
+      #same in different order
+      res = @am.remove_duplicate_authors(['Linnaeus', 'Muller'], ['Linn', 'Muller'])
+      res.should == [[], []]      
+      #auth Li submatches Linnaeus, but Li size less then 3 required to remove Linnaeus
+      res = @am.remove_duplicate_authors(['Dem', 'Li'], ['Linnaeus', 'Stepanov'])
+      res.should == [["Dem"], ["Linnaeus", "Stepanov"]]
+      #fuzzy match
+      res = @am.remove_duplicate_authors(['Dem', 'Lennaeus'], ['Linnaeus', 'Stepanov'])
+      res.should == [["Dem"], ["Stepanov"]]
     end
   end
 
