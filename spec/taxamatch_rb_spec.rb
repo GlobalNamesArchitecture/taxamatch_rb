@@ -41,8 +41,7 @@ describe 'Normalizer' do
     Normalizer.normalize('Leœptura').should == 'LEOEPTURA'
     Normalizer.normalize('Ærenea').should == 'AERENEA'
     Normalizer.normalize('Fallén').should == 'FALLEN'
-    Normalizer.normalize('abcd').should == 'ABCD'
-    Normalizer.normalize('abcd').should == 'ABCD'    
+    Normalizer.normalize('Choriozopella trägårdhi').should == 'CHORIOZOPELLA TRAGARDHI'
   end
   
   it 'should normalize words' do

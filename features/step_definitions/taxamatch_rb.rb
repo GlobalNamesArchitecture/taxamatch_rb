@@ -58,6 +58,7 @@ When /^I run a Normalizer function normalize$/ do
 end
 
 Then /^I should receive "([^\"]*)" as a normalized form of the string$/ do |arg1|
+  puts Normalizer.normalize(string)
   normalized_string.should == arg1
 end
 

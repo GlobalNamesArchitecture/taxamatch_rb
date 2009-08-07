@@ -25,9 +25,13 @@ class Taxamatch
   #takes two hashes of parsed scientific names, analyses them and returns back 
   #this function is useful when species strings are preparsed.
   def taxamatch_parsed_data(parsed_data_1, parsed_data_2)
-    return match_uninomial(parsed_data_1, parsed_data_2) if parsed_data_1[:uninomial] && parsed_data_2[:uninomial] 
-    return match_multinomial(parsed_data_1, parsed_data_2) if parsed_data_1[:genus] && parsed_data_2[:genus]
-    return false
+    result = nil
+    result =  match_uninomial(parsed_data_1, parsed_data_2) if parsed_data_1[:uninomial] && parsed_data_2[:uninomial] 
+    result =  match_multinomial(parsed_data_1, parsed_data_2) if parsed_data_1[:genus] && parsed_data_2[:genus]
+    if result && result[:match]
+      result[:match] = match_authors(parsed_data_1, parsed_data_2) > 0 ? true : false 
+    end
+    return result
   end
   
   def match_uninomial(parsed_data_1, parsed_data_2)
@@ -72,7 +76,7 @@ class Taxamatch
     au2 = parsed_data_2[:all_authors]
     yr1 = parsed_data_1[:all_years]
     yr2 = parsed_data_2[:all_years]
-    #Authormatch.compare_authorities(au1, au2, yr1, yr2)
+    Authmatch.authmatch(au1, au2, yr1, yr2)
   end
   
   def match_matches(genus_match, species_match, infraspecies_matches = []) 
