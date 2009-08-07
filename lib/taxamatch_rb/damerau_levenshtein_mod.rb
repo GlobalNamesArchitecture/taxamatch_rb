@@ -12,9 +12,11 @@ module Taxamatch
 
     inline do |builder|
       builder.c "
-      static VALUE distance_utf(VALUE _s, VALUE _t, long block_size, long max_distance){
-        long min, i, i1, j, j1, k, sl, half_sl, tl, half_tl, cost, *d, distance, del, ins, subs, transp, block, current_distance;
-        long stop_execution = 0;
+      static VALUE distance_utf(VALUE _s, VALUE _t, int block_size, int max_distance){
+        int i, i1, j, j1, k, sl, half_sl, tl, half_tl, cost, *d, distance, del, ins, subs, transp, block;
+        int stop_execution = 0;
+        int min = 0;
+        int current_distance = 0;
 
         VALUE *sv = RARRAY_PTR(_s);
         VALUE *tv = RARRAY_PTR(_t);
@@ -22,22 +24,22 @@ module Taxamatch
         sl = RARRAY_LEN(_s);
         tl = RARRAY_LEN(_t);
       
-        if (sl == 0) return LONG2NUM(tl);
-        if (tl == 0) return LONG2NUM(sl);
+        if (sl == 0) return INT2NUM(tl);
+        if (tl == 0) return INT2NUM(sl);
         //case of lengths 1 must present or it will break further in the code
-        if (sl == 1 && tl == 1 && sv[0] != tv[0]) return LONG2NUM(1);
+        if (sl == 1 && tl == 1 && sv[0] != tv[0]) return INT2NUM(1);
       
-        long s[sl];
-        long t[tl];
+        int s[sl];
+        int t[tl];
       
-        for (i=0; i < sl; i++) s[i] = NUM2LONG(sv[i]);
-        for (i=0; i < tl; i++) t[i] = NUM2LONG(tv[i]);
+        for (i=0; i < sl; i++) s[i] = NUM2INT(sv[i]);
+        for (i=0; i < tl; i++) t[i] = NUM2INT(tv[i]);
       
         sl++;
         tl++;
       
         //one-dimentional representation of 2 dimentional array len(s)+1 * len(t)+1
-        d = malloc((sizeof(long))*(sl)*(tl));
+        d = malloc((sizeof(int))*(sl)*(tl));
         //populate 'vertical' row starting from the 2nd position (first one is filled already)
         for(i = 0; i < tl; i++){
           d[i*sl] = i;
@@ -60,8 +62,8 @@ module Taxamatch
             block = block < half_tl ? block : half_tl;
           
             while (block >= 1){   
-              long swap1 = 1;
-              long swap2 = 1;
+              int swap1 = 1;
+              int swap2 = 1;
               i1 = i - (block * 2);
               j1 = j - (block * 2);
               for (k = i1; k < i1 + block; k++) {
@@ -81,7 +83,7 @@ module Taxamatch
               ins = d[(j-1)*sl + i] + 1;
               min = del;
               if (ins < min) min = ins;
-              //if (i == 2 && j==2) return LONG2NUM(swap2+5); 
+              //if (i == 2 && j==2) return INT2NUM(swap2+5); 
               if (i >= block && j >= block && swap1 == 1 && swap2 == 1){
                 transp = d[(j - block * 2) * sl + i - block * 2] + cost + block -1; 
                 if (transp < min) min = transp;
@@ -103,7 +105,7 @@ module Taxamatch
         if (stop_execution == 1) distance = current_distance;
       
         free(d);
-        return LONG2NUM(distance);
+        return INT2NUM(distance);
       }
      "
     end
