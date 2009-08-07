@@ -25,13 +25,13 @@ end
 #############
 
 sci_name =  result = nil
-parser = TaxamatchParser.new
+parser = Taxamatch::Parser.new
 
 Given /^a name "([^\"]*)"$/ do |arg1|
   sci_name = arg1
 end
 
-When /^I run a TaxamatchParser function parse$/ do
+When /^I run a Taxamatch::Parser function parse$/ do
   result = parser.parse(sci_name)
 end
 
@@ -53,12 +53,12 @@ Given /^a string "([^\"]*)"$/ do |arg1|
   string = arg1
 end
 
-When /^I run a Normalizer function normalize$/ do
-  normalized_string = Normalizer.normalize(string)
+When /^I run a Taxamatch::Normalizer function normalize$/ do
+  normalized_string = Taxamatch::Normalizer.normalize(string)
 end
 
 Then /^I should receive "([^\"]*)" as a normalized form of the string$/ do |arg1|
-  puts Normalizer.normalize(string)
+  puts Taxamatch::Normalizer.normalize(string)
   normalized_string.should == arg1
 end
 
@@ -72,8 +72,8 @@ Given /^a word "([^\"]*)"$/ do |arg1|
   word = arg1
 end
 
-When /^I run a Phonetizer function near_match$/ do
-  phonetized_word = Phonetizer.near_match(word)
+When /^I run a Taxamatch::Phonetizer function near_match$/ do
+  phonetized_word = Taxamatch::Phonetizer.near_match(word)
 end
 
 Then /^I should receive "([^\"]*)" as a phonetic form of the word$/ do |arg1|
@@ -81,8 +81,8 @@ Then /^I should receive "([^\"]*)" as a phonetic form of the word$/ do |arg1|
 end
 
 
-When /^I run a Phonetizer function near_match with an option normalize_ending$/ do
-  phonetized_word = Phonetizer.near_match(word,true)
+When /^I run a Taxamatch::Phonetizer function near_match with an option normalize_ending$/ do
+  phonetized_word = Taxamatch::Phonetizer.near_match(word,true)
 end
 
 Then /^I should receive "([^\"]*)" as a normalized phonetic form of the word$/ do |arg1|
@@ -90,7 +90,7 @@ Then /^I should receive "([^\"]*)" as a normalized phonetic form of the word$/ d
 end
 
 name1 = name2 = match = nil
-tm=Taxamatch.new
+tm = Taxamatch::Base.new
 
 Given /^strings "([^\"]*)" and "([^\"]*)"$/ do |arg1, arg2|
   name1 = arg1
@@ -106,7 +106,7 @@ Then /^I should see that these two names match$/ do
 end
 
 auth1 = auth2 = yr1 = yr2 = match = nil
-au=Authmatch
+au=Taxamatch::Authmatch
 
 Given /^authors "([^\"]*)","([^\"]*)" with year "([^\"]*)" and authors "([^\"]*)" and year "([^\"]*)"$/ do |arg1, arg2, arg3, arg4, arg5|
   auth1 = [arg1,arg2]

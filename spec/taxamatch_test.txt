@@ -16,4 +16,4 @@ Pomatomus saltator|Pomatomus saltatrix|true
 Loligo pealeii|Loligo plei|false
 
 # different authors should not match
-#Puma concolor Linnaeus|Puma concolor Kurtz|false
+Puma concolor Linnaeus|Puma concolor Kurtz|false

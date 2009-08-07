@@ -1,10 +1,10 @@
 # encoding: UTF-8
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
-describe 'DamerauLevensteinMod' do
+describe 'DamerauLevenshteinMod' do
   it 'should get tests' do
     read_test_file(File.expand_path(File.dirname(__FILE__)) + '/damerau_levenshtein_mod_test.txt', 5) do |y|
-      dl = DamerauLevenshteinMod.new
+      dl = Taxamatch::DamerauLevenshteinMod.new
       if y
         res = dl.distance(y[0], y[1], y[3].to_i, y[2].to_i)
         puts y if res != y[4].to_i
@@ -16,7 +16,7 @@ end
 
 describe 'Parser' do
   before(:all) do
-    @parser =TaxamatchParser.new
+    @parser = Taxamatch::Parser.new
   end
   
   it 'should parse uninomials' do
@@ -35,27 +35,27 @@ describe 'Parser' do
 end
 
 
-describe 'Normalizer' do
+describe 'Taxamatch::Normalizer' do
   it 'should normalize  strings' do
-    Normalizer.normalize('abcd').should == 'ABCD'
-    Normalizer.normalize('Leœptura').should == 'LEOEPTURA'
-    Normalizer.normalize('Ærenea').should == 'AERENEA'
-    Normalizer.normalize('Fallén').should == 'FALLEN'
-    Normalizer.normalize('Choriozopella trägårdhi').should == 'CHORIOZOPELLA TRAGARDHI'
+    Taxamatch::Normalizer.normalize('abcd').should == 'ABCD'
+    Taxamatch::Normalizer.normalize('Leœptura').should == 'LEOEPTURA'
+    Taxamatch::Normalizer.normalize('Ærenea').should == 'AERENEA'
+    Taxamatch::Normalizer.normalize('Fallén').should == 'FALLEN'
+    Taxamatch::Normalizer.normalize('Choriozopella trägårdhi').should == 'CHORIOZOPELLA TRAGARDHI'
   end
   
   it 'should normalize words' do
-    Normalizer.normalize_word('L-3eœ|pt[ura$').should == 'L-3EOEPTURA'
+    Taxamatch::Normalizer.normalize_word('L-3eœ|pt[ura$').should == 'L-3EOEPTURA'
   end
 end
 
-describe 'Taxamatch' do
+describe 'Taxamatch::Base' do
   before(:all) do
-    @tm = Taxamatch.new
+    @tm = Taxamatch::Base.new
   end
   
   it 'should get txt tests' do
-    dl = DamerauLevenshteinMod.new
+    dl = Taxamatch::DamerauLevenshteinMod.new
     read_test_file(File.expand_path(File.dirname(__FILE__)) + '/taxamatch_test.txt', 3) do |y|
       if y
         y[2] = y[2] == 'true' ? true : false
@@ -174,14 +174,40 @@ describe 'Taxamatch' do
     @tm.match_matches(gmatch, smatch).should == {:phonetic_match=>true, :edit_distance=>4, :match=>true}
   end
 
-  describe 'Authmatch' do
+  describe 'Taxamatch::Authmatch' do
     before(:all) do
-      @am = Authmatch
+      @am = Taxamatch::Authmatch
     end
     
     it 'should calculate score' do
-      res = @am.authmatch(['Linnaeus', 'Muller'], ['L', 'Kenn'], [], [1788])
+      res = @am.authmatch(['Linnaeus', 'Muller'], ['L'], [], [1788])
       res.should == 90
+      res = @am.authmatch(['Linnaeus'],['Kurtz'], [], [])
+      res.should == 0
+      #found all authors, same year
+      res = @am.authmatch(['Linnaeus', 'Muller'], ['Muller', 'Linnaeus'], [1766], [1766])
+      res.should == 100
+      #all authors, 1 year diff
+      res = @am.authmatch(['Linnaeus', 'Muller'], ['Muller', 'Linnaeus'], [1767], [1766])
+      res.should == 54
+      #year is not counted in
+      res = @am.authmatch(['Linnaeus', 'Muller'], ['Muller', 'Linnaeus'], [1767], [])
+      res.should == 94
+      #found all authors on one side, same year
+      res = @am.authmatch(['Linnaeus', 'Muller', 'Kurtz'], ['Muller', 'Linnaeus'], [1767], [1767])
+      res.should == 91
+      #found all authors on one side, 1 year diff
+      res = @am.authmatch(['Linnaeus', 'Muller', 'Kurtz'], ['Muller', 'Linnaeus'], [1766], [1767])
+      res.should == 51
+      #found all authors on one side, year does not count
+      res = @am.authmatch(['Linnaeus', 'Muller'], ['Muller', 'Linnaeus', 'Kurtz'], [1766], [])
+      res.should == 90
+      #found some authors
+      res = @am.authmatch(['Stepanov', 'Linnaeus', 'Muller'], ['Muller', 'Kurtz', 'Stepanov'], [1766], [])
+      res.should == 67
+      #if year does not match or not present no match for previous case
+      res = @am.authmatch(['Stepanov', 'Linnaeus', 'Muller'], ['Muller', 'Kurtz', 'Stepanov'], [1766], [1765])
+      res.should == 0
     end
     
     it 'should compare years' do
@@ -205,7 +231,18 @@ describe 'Taxamatch' do
       #fuzzy match
       res = @am.remove_duplicate_authors(['Dem', 'Lennaeus'], ['Linnaeus', 'Stepanov'])
       res.should == [["Dem"], ["Stepanov"]]
+      res = @am.remove_duplicate_authors(['Linnaeus', 'Muller'], ['L', 'Kenn'])
+      res.should == [['Linnaeus', 'Muller'], ['Kenn']]
+      res = @am.remove_duplicate_authors(['Linnaeus', 'Muller'], ['Muller', 'Linnaeus', 'Kurtz'])
+      res.should == [[],['Kurtz']]
     end
+
+    it 'should fuzzy match authors' do
+      #TODO: fix the bug revealed by this test
+      # res = @am.fuzzy_match_authors('L', 'Muller')
+      # res.should be_false
+    end
+    
   end
 
 end

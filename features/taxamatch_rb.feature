@@ -18,25 +18,25 @@ Feature: Find if two scientific names are lexical variants of each other
 
   Scenario: find edit distance between two unicode (utf8) strings
     Given strings "Sjostedt" and "Sojstedt", transposition block size "1", and a maximum allowed distance "4"
-    When I run "DamerauLevenshteinMod" instance function "distance"
+    When I run "Taxamatch::DamerauLevenshteinMod" instance function "distance"
     Then I should receive edit distance "1"
 
   Scenario: find parts of a name in unicode
     Given a name "Arthopyrenia hyalospora (Banker) D. Hall 1988 hyalosporis Kutz 1999"
-    When I run a TaxamatchParser function parse
+    When I run a Taxamatch::Parser function parse
     Then I should receive "Arthopyrenia" as genus epithet, "hyalospora" as species epithet, "Banker" and "D. Hall" as species authors, "1988" as a species year
     
   Scenario: normalize a string into ASCII upcase
     Given a string "Choriozopella trägårdhi"
-    When I run a Normalizer function normalize
+    When I run a Taxamatch::Normalizer function normalize
     Then I should receive "CHORIOZOPELLA TRAGARDHI" as a normalized form of the string
     
   Scenario: create phonetic version of a word
     Given a word "bifasciata"
-    When I run a Phonetizer function near_match
+    When I run a Taxamatch::Phonetizer function near_match
     Then I should receive "BIFASATA" as a phonetic form of the word
   
   Scenario: create phonetic version of a species epithet normalizing ending
     Given a word "bifasciatum"
-    When I run a Phonetizer function near_match with an option normalize_ending
+    When I run a Taxamatch::Phonetizer function near_match with an option normalize_ending
     Then I should receive "BIFASATA" as a normalized phonetic form of the word

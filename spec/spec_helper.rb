@@ -23,6 +23,6 @@ def read_test_file(file, fields_num)
 end
 
 def make_taxamatch_hash(string)
-  normalized = Normalizer.normalize(string)
-  {:epitheton => string, :normalized => normalized, :phonetized => Phonetizer.near_match(normalized)}
+  normalized = Taxamatch::Normalizer.normalize(string)
+  {:epitheton => string, :normalized => normalized, :phonetized => Taxamatch::Phonetizer.near_match(normalized)}
 end
