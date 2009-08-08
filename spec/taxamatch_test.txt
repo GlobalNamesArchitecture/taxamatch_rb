@@ -20,3 +20,9 @@ Puma concolor Linnaeus|Puma concolor Kurtz|false
 
 #real life examples
 Biatora borealis|Bactra borealis Diakonoff 1964|false
+
+Homo sapien|Homo sapiens|true
+Homo sapiens Linnaeus|Homo sapens (Linn. 1758) |true
+Homo sapiens Mozzherin|Homo sapiens Linneaus|false
+
+

@@ -22,32 +22,32 @@ module Taxamatch
    
     #takes two scientific names and returns true if names match and false if they don't
     def taxamatch(str1, str2) 
-      parsed_data_1 = @parser.parse(str1)
-      parsed_data_2 = @parser.parse(str2)
-      taxamatch_parsed_data(parsed_data_1, parsed_data_2)[:match]
+      preparsed_1 = @parser.parse(str1)
+      preparsed_2 = @parser.parse(str2)
+      taxamatch_preparsed(preparsed_1, preparsed_2)[:match]
     end
   
     #takes two hashes of parsed scientific names, analyses them and returns back 
     #this function is useful when species strings are preparsed.
-    def taxamatch_parsed_data(parsed_data_1, parsed_data_2)
+    def taxamatch_preparsed(preparsed_1, preparsed_2)
       result = nil
-      result =  match_uninomial(parsed_data_1, parsed_data_2) if parsed_data_1[:uninomial] && parsed_data_2[:uninomial] 
-      result =  match_multinomial(parsed_data_1, parsed_data_2) if parsed_data_1[:genus] && parsed_data_2[:genus]
+      result =  match_uninomial(preparsed_1, preparsed_2) if preparsed_1[:uninomial] && preparsed_2[:uninomial] 
+      result =  match_multinomial(preparsed_1, preparsed_2) if preparsed_1[:genus] && preparsed_2[:genus]
       if result && result[:match]
-        result[:match] = false if match_authors(parsed_data_1, parsed_data_2) == 0 
+        result[:match] = false if match_authors(preparsed_1, preparsed_2) == 0 
       end
       return result
     end
   
-    def match_uninomial(parsed_data_1, parsed_data_2)
+    def match_uninomial(preparsed_1, preparsed_2)
       return false
     end
 
-    def match_multinomial(parsed_data_1, parsed_data_2)
-      gen_match = match_genera(parsed_data_1[:genus], parsed_data_2[:genus])
-      sp_match = match_species(parsed_data_1[:species], parsed_data_2[:species])
-      au_match = match_authors(parsed_data_1, parsed_data_2)
-      total_length = parsed_data_1[:genus][:epitheton].size + parsed_data_2[:genus][:epitheton].size + parsed_data_1[:species][:epitheton].size + parsed_data_2[:species][:epitheton].size
+    def match_multinomial(preparsed_1, preparsed_2)
+      gen_match = match_genera(preparsed_1[:genus], preparsed_2[:genus])
+      sp_match = match_species(preparsed_1[:species], preparsed_2[:species])
+      au_match = match_authors(preparsed_1, preparsed_2)
+      total_length = preparsed_1[:genus][:epitheton].size + preparsed_2[:genus][:epitheton].size + preparsed_1[:species][:epitheton].size + preparsed_2[:species][:epitheton].size
       match = match_matches(gen_match, sp_match)
       match.merge({:score => (1- match[:edit_distance]/(total_length/2))})
     end
@@ -76,11 +76,11 @@ module Taxamatch
       {:edit_distance => ed, :match => match, :phonetic_match => false}
     end
   
-    def match_authors(parsed_data_1, parsed_data_2)
-      au1 = parsed_data_1[:all_authors]
-      au2 = parsed_data_2[:all_authors]
-      yr1 = parsed_data_1[:all_years]
-      yr2 = parsed_data_2[:all_years]
+    def match_authors(preparsed_1, preparsed_2)
+      au1 = preparsed_1[:all_authors]
+      au2 = preparsed_2[:all_authors]
+      yr1 = preparsed_1[:all_years]
+      yr2 = preparsed_2[:all_years]
       Taxamatch::Authmatch.authmatch(au1, au2, yr1, yr2)
     end
   
