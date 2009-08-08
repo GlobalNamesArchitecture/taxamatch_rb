@@ -4,6 +4,7 @@ Taxamatch_Rb is a ruby implementation of Taxamatch algorithms developed by Tony 
 
 The purpose of Taxamatch gem is to facilitate fuzzy comparison of two scientific name renderings to find out if they actually point to the same scientific name.
 
+    require 'taxamatch_rb'
     tm = Taxamatch::Base.new
     tm.taxamatch('Homo sapien', 'Homo sapiens') #returns true
     tm.taxamatch('Homo sapiens Linnaeus', 'Hommo sapens (Linn. 1758)') #returns true
