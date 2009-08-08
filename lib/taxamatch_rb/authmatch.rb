@@ -1,3 +1,5 @@
+# Algorithms for Taxamatch::Authmatch are developed by Patrick Leary of uBio and EOL fame
+
 module Taxamatch
   class Authmatch
 
