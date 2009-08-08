@@ -71,8 +71,9 @@ module Taxamatch
         end
       end
       res[:authors].uniq!
+      res[:normalized_authors] = res[:authors].map {|a| Taxamatch::Normalizer.normalize_author(a)}
       res[:years].uniq!
-      @res[:all_authors] += res[:authors] if res[:authors].size > 0
+      @res[:all_authors] += res[:normalized_authors] if res[:normalized_authors].size > 0
       @res[:all_years] += res[:years] if res[:years].size > 0
     end
 

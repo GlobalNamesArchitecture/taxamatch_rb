@@ -20,17 +20,16 @@ describe 'Parser' do
   end
   
   it 'should parse uninomials' do
-    @parser.parse('Betula').should == {:all_authors=>[], :all_years=>[], :uninomial=>{:epitheton=>"Betula", :normalized=>"BETULA", :phonetized=>"BITILA", :authors=>[], :years=>[]}}
-    @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>["1872"], :uninomial=>{:epitheton=>"Aerenea", :authors=>["Lacordaire"], :normalized=>"AERENEA", :phonetized=>"ERINIA", :years=>["1872"]}}
-    @parser.parse('Ærenea (Lacordaire, 1872) Muller 2007').should == {:all_authors=>["LACORDAIRE", "MULLER"], :all_years=>["1872", "2007"], :uninomial=>{:epitheton=>"Aerenea", :authors=>["Lacordaire", "Muller"], :normalized=>"AERENEA", :phonetized=>"ERINIA", :years=>["1872", "2007"]}}
+    @parser.parse('Betula').should == {:all_authors=>[], :all_years=>[], :uninomial=>{:epitheton=>"Betula", :normalized=>"BETULA", :phonetized=>"BITILA", :authors=>[], :years=>[], :normalized_authors=>[]}}
+    @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>["1872"], :uninomial=>{:epitheton=>"Aerenea", :normalized=>"AERENEA", :phonetized=>"ERINIA", :authors=>["Lacordaire"], :years=>["1872"], :normalized_authors=>["LACORDAIRE"]}}
   end
   
   it 'should parse binomials' do
-    @parser.parse('Leœptura laetifica Dow, 1913').should == {:species=>{:epitheton=>"laetifica", :authors=>["Dow"], :normalized=>"LAETIFICA", :phonetized=>"LITIFICA", :years=>["1913"]}, :all_authors=>["DOW"], :all_years=>["1913"], :genus=>{:epitheton=>"Leoeptura", :authors=>[], :normalized=>"LEOEPTURA", :phonetized=>"LIPTIRA", :years=>[]}}
+    @parser.parse('Leœptura laetifica Dow, 1913').should == {:all_authors=>["DOW"], :all_years=>["1913"], :genus=>{:epitheton=>"Leoeptura", :normalized=>"LEOEPTURA", :phonetized=>"LIPTIRA", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:epitheton=>"laetifica", :normalized=>"LAETIFICA", :phonetized=>"LITIFICA", :authors=>["Dow"], :years=>["1913"], :normalized_authors=>["DOW"]}}
   end
   
   it 'should parse trinomials' do 
-    @parser.parse('Hydnellum scrobiculatum zonatum (Banker) D. Hall et D.E. Stuntz 1972').should == {:genus=>{:epitheton=>"Hydnellum", :authors=>[], :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :years=>[]}, :infraspecies=>[{:epitheton=>"zonatum", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :normalized=>"ZONATUM", :phonetized=>"ZANATA", :years=>["1972"]}], :all_authors=>["BANKER", "D. HALL", "D.E. STUNTZ"], :all_years=>["1972"], :species=>{:epitheton=>"scrobiculatum", :authors=>[], :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :years=>[]}}
+    @parser.parse('Hydnellum scrobiculatum zonatum (Banker) D. Hall et D.E. Stuntz 1972').should == {:all_authors=>["BANKER", "D HALL", "D E STUNTZ"], :all_years=>["1972"], :genus=>{:epitheton=>"Hydnellum", :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:epitheton=>"scrobiculatum", :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :authors=>[], :years=>[], :normalized_authors=>[]}, :infraspecies=>[{:epitheton=>"zonatum", :normalized=>"ZONATUM", :phonetized=>"ZANATA", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :years=>["1972"], :normalized_authors=>["BANKER", "D HALL", "D E STUNTZ"]}]}
   end
 end
 

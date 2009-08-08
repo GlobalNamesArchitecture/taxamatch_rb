@@ -8,7 +8,11 @@ module Taxamatch
     end
   
     def self.normalize_word(word)
-      self.normalize(word).gsub(/[^A-Z0-9\-]/, '')
+      self.normalize(word).gsub(/[^A-Z0-9\-]/, '').strip
+    end
+    
+    def self.normalize_author(string)
+      self.normalize(string).gsub(/[^A-Z]/, ' ').gsub(/[\s]{2,}/, ' ').strip
     end
 
   protected
