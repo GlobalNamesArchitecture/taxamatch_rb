@@ -24,7 +24,7 @@ module Taxamatch
     def taxamatch(str1, str2) 
       preparsed_1 = @parser.parse(str1)
       preparsed_2 = @parser.parse(str2)
-      taxamatch_preparsed(preparsed_1, preparsed_2)[:match]
+      taxamatch_preparsed(preparsed_1, preparsed_2)['match']
     end
   
     #takes two hashes of parsed scientific names, analyses them and returns back 
@@ -33,8 +33,8 @@ module Taxamatch
       result = nil
       result =  match_uninomial(preparsed_1, preparsed_2) if preparsed_1[:uninomial] && preparsed_2[:uninomial] 
       result =  match_multinomial(preparsed_1, preparsed_2) if preparsed_1[:genus] && preparsed_2[:genus]
-      if result && result[:match]
-        result[:match] = false if match_authors(preparsed_1, preparsed_2) == 0 
+      if result && result['match']
+        result['match'] = false if match_authors(preparsed_1, preparsed_2) == 0 
       end
       return result
     end
@@ -49,7 +49,7 @@ module Taxamatch
       au_match = match_authors(preparsed_1, preparsed_2)
       total_length = preparsed_1[:genus][:epitheton].size + preparsed_2[:genus][:epitheton].size + preparsed_1[:species][:epitheton].size + preparsed_2[:species][:epitheton].size
       match = match_matches(gen_match, sp_match)
-      match.merge({:score => (1- match[:edit_distance]/(total_length/2))})
+      match.merge({'score' => (1- match['edit_distance']/(total_length/2))})
     end
   
     def match_genera(genus1, genus2)
@@ -57,10 +57,10 @@ module Taxamatch
       genus2_length = genus2[:normalized].size
       match = false
       ed = @dlm.distance(genus1[:normalized], genus2[:normalized],2,3)
-      return {:edit_distance => ed, :phonetic_match => true, :match => true} if genus1[:phonetized] == genus2[:phonetized] 
+      return {'edit_distance' => ed, 'phonetic_match' => true, 'match' => true} if genus1[:phonetized] == genus2[:phonetized] 
     
       match = true if ed <= 3 && ([genus1_length, genus2_length].min > ed * 2) && (ed < 2 || genus1[0] == genus2[0])
-      {:edit_distance => ed, :match => match, :phonetic_match => false} 
+      {'edit_distance' => ed, 'match' => match, 'phonetic_match' => false} 
     end
 
     def match_species(sp1, sp2)
@@ -70,10 +70,10 @@ module Taxamatch
       sp2[:phonetized] = Taxamatch::Phonetizer.normalize_ending sp2[:phonetized]
       match = false
       ed = @dlm.distance(sp1[:normalized], sp2[:normalized], 4, 4)
-      return {:edit_distance => ed, :phonetic_match => true, :match => true} if sp1[:phonetized] == sp2[:phonetized]
+      return {'edit_distance' => ed, 'phonetic_match' => true, 'match' => true} if sp1[:phonetized] == sp2[:phonetized]
     
       match = true if ed <= 4 && ([sp1_length, sp2_length].min >= ed * 2) && (ed < 2 || sp1[:normalized][0] == sp2[:normalized][0]) && (ed < 4 || sp1[:normalized][0...3] == sp2[:normalized][0...3])
-      {:edit_distance => ed, :match => match, :phonetic_match => false}
+      { 'edit_distance' => ed, 'match' => match, 'phonetic_match' => false}
     end
   
     def match_authors(preparsed_1, preparsed_2)
@@ -86,10 +86,10 @@ module Taxamatch
   
     def match_matches(genus_match, species_match, infraspecies_matches = []) 
       match = species_match
-      match[:edit_distance] += genus_match[:edit_distance]
-      match[:match] = false if match[:edit_distance] > 4
-      match[:match] &&= genus_match[:match]
-      match[:phonetic_match] &&= genus_match[:phonetic_match]
+      match['edit_distance'] += genus_match['edit_distance']
+      match['match'] = false if match['edit_distance'] > 4
+      match['match'] &&= genus_match['match']
+      match['phonetic_match'] &&= genus_match['phonetic_match']
       match
     end
 

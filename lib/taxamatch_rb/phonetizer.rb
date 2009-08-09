@@ -1,8 +1,12 @@
 # encoding: UTF-8
 module Taxamatch
 
-  class Phonetizer
-  
+  module Phonetizer
+    
+    def self.phonetize(a_word, normalize_ending = false)
+      self.near_match(a_word, normalize_ending)
+    end
+    
     def self.near_match(a_word, normalize_ending = false)
       a_word = a_word.strip rescue ''
       return '' if a_word == ''
