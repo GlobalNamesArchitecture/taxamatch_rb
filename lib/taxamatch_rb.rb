@@ -24,7 +24,7 @@ module Taxamatch
     def taxamatch(str1, str2) 
       preparsed_1 = @parser.parse(str1)
       preparsed_2 = @parser.parse(str2)
-      taxamatch_preparsed(preparsed_1, preparsed_2)['match']
+      taxamatch_preparsed(preparsed_1, preparsed_2)['match'] rescue false
     end
   
     #takes two hashes of parsed scientific names, analyses them and returns back 

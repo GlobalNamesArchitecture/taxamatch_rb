@@ -65,6 +65,10 @@ describe 'Taxamatch::Base' do
     end
   end
   
+  it 'should work with names that cannot be parsed' do
+    res = @tm.taxamatch('Quadraspidiotus ostreaeformis MacGillivray, 1921','Quadraspidiotus ostreaeformis Curtis)')
+    res = false
+  end
   
   it 'should compare genera' do
     #edit distance 1 always match
