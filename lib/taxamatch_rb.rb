@@ -21,10 +21,11 @@ module Taxamatch
    
    
     #takes two scientific names and returns true if names match and false if they don't
-    def taxamatch(str1, str2) 
+    def taxamatch(str1, str2, return_boolean = true) 
       preparsed_1 = @parser.parse(str1)
       preparsed_2 = @parser.parse(str2)
-      taxamatch_preparsed(preparsed_1, preparsed_2)['match'] rescue false
+      match = taxamatch_preparsed(preparsed_1, preparsed_2) rescue nil
+      return_boolean && match ? match['match'] : match
     end
   
     #takes two hashes of parsed scientific names, analyses them and returns back 
@@ -46,10 +47,12 @@ module Taxamatch
     def match_multinomial(preparsed_1, preparsed_2)
       gen_match = match_genera(preparsed_1[:genus], preparsed_2[:genus])
       sp_match = match_species(preparsed_1[:species], preparsed_2[:species])
-      au_match = match_authors(preparsed_1, preparsed_2)
       total_length = preparsed_1[:genus][:epitheton].size + preparsed_2[:genus][:epitheton].size + preparsed_1[:species][:epitheton].size + preparsed_2[:species][:epitheton].size
       match = match_matches(gen_match, sp_match)
-      match.merge({'score' => (1- match['edit_distance']/(total_length/2))})
+      if match['match']
+        match['match'] = match_authors(preparsed_1, preparsed_2)
+      end
+      match.merge({'score' => (1 - match['edit_distance']/(total_length/2))})
     end
   
     def match_genera(genus1, genus2)
