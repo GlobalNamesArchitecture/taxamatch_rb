@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dmitry Mozzherin"]
   s.date = %q{2009-08-12}
+  s.description = %q{This gem implements algorithsm for fuzzy matching scientific names developed by Tony Rees}
   s.email = %q{dmozzherin@eol.org}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -29,11 +30,12 @@ Gem::Specification.new do |s|
      "spec/taxamatch_rb_spec.rb",
      "spec/taxamatch_test.txt"
   ]
+  s.has_rdoc = true
   s.homepage = %q{http://github.com/dimus/taxamatch_rb}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
-  s.summary = %q{TODO}
+  s.rubygems_version = %q{1.3.1}
+  s.summary = %q{Implementation of Tony Rees Taxamatch algorithms}
   s.test_files = [
     "spec/spec_helper.rb",
      "spec/taxamatch_rb_spec.rb"
@@ -41,7 +43,7 @@ Gem::Specification.new do |s|
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
+    s.specification_version = 2
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<RubyInline>, [">= 0"])

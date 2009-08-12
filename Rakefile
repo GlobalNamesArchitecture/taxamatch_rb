@@ -5,7 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "taxamatch_rb"
-    gem.summary = %Q{TODO}
+    gem.summary = 'Implementation of Tony Rees Taxamatch algorithms'
+    gem.description = 'This gem implements algorithsm for fuzzy matching scientific names developed by Tony Rees'
     gem.email = "dmozzherin@eol.org"
     gem.homepage = "http://github.com/dimus/taxamatch_rb"
     gem.authors = ["Dmitry Mozzherin"]
