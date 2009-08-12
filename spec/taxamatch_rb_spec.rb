@@ -55,12 +55,13 @@ describe 'Taxamatch::Base' do
   
   it 'should get txt tests' do
     dl = Taxamatch::DamerauLevenshteinMod.new
-    read_test_file(File.expand_path(File.dirname(__FILE__)) + '/taxamatch_test.txt', 3) do |y|
+    read_test_file(File.expand_path(File.dirname(__FILE__)) + '/taxamatch_test.txt', 4) do |y|
       if y
         y[2] = y[2] == 'true' ? true : false
-        res = @tm.taxamatch(y[0], y[1])
-        puts "%s, %s, %s" % [y[0], y[1], y[2]] if res != y[2]
-        res.should == y[2]
+        res = @tm.taxamatch(y[0], y[1], false)
+        #puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]] if res != y[2]
+        res['match'].should == y[2]
+        res['edit_distance'].should == y[3].to_i
       end
     end
   end
