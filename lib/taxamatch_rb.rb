@@ -3,7 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
    $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 # $:.unshift('taxamatch_rb')
 require 'taxamatch_rb/damerau_levenshtein_mod'
-require 'taxamatch_rb/parser'
+require 'taxamatch_rb/atomizer'
 require 'taxamatch_rb/normalizer'
 require 'taxamatch_rb/phonetizer'
 require 'taxamatch_rb/authmatch'
@@ -15,7 +15,7 @@ module Taxamatch
   class Base
   
     def initialize
-      @parser = Taxamatch::Parser.new
+      @parser = Taxamatch::Atomizer.new
       @dlm = Taxamatch::DamerauLevenshteinMod.new
     end
    

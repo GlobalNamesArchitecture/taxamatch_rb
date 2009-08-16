@@ -3,7 +3,7 @@ require 'biodiversity'
 
 module Taxamatch
 
-  class Parser
+  class Atomizer
     def initialize
       @parser = ScientificNameParser.new
       @parsed_raw = nil

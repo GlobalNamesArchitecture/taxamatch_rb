@@ -33,7 +33,7 @@ or
 
 * preparse names for the matching (necessary for large databases of scientific names)
 
-    p = Taxamatch::Parser.new
+    p = Taxamatch::Atomizer.new
     parsed_name1 = p.parse('Monacanthus fronticinctus Günther 1867 sec. Eschmeyer 2004')
     parsed_name2 = p.parse('Monacanthus fronticinctus (Gunther, 1867)')
 

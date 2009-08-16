@@ -25,13 +25,13 @@ end
 #############
 
 sci_name =  result = nil
-parser = Taxamatch::Parser.new
+parser = Taxamatch::Atomizer.new
 
 Given /^a name "([^\"]*)"$/ do |arg1|
   sci_name = arg1
 end
 
-When /^I run a Taxamatch::Parser function parse$/ do
+When /^I run a Taxamatch::Atomizer function parse$/ do
   result = parser.parse(sci_name)
 end
 

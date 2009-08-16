@@ -16,7 +16,7 @@ end
 
 describe 'Parser' do
   before(:all) do
-    @parser = Taxamatch::Parser.new
+    @parser = Taxamatch::Atomizer.new
   end
   
   it 'should parse uninomials' do

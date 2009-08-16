@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{taxamatch_rb}
-  s.version = "0.5.5"
+  s.version = "0.5.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dmitry Mozzherin"]
@@ -19,10 +19,10 @@ Gem::Specification.new do |s|
   s.files = [
     "README.rdoc",
      "lib/taxamatch_rb.rb",
+     "lib/taxamatch_rb/atomizer.rb",
      "lib/taxamatch_rb/authmatch.rb",
      "lib/taxamatch_rb/damerau_levenshtein_mod.rb",
      "lib/taxamatch_rb/normalizer.rb",
-     "lib/taxamatch_rb/parser.rb",
      "lib/taxamatch_rb/phonetizer.rb",
      "spec/damerau_levenshtein_mod_test.txt",
      "spec/spec.opts",

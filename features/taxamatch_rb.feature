@@ -23,7 +23,7 @@ Feature: Find if two scientific names are lexical variants of each other
 
   Scenario: find parts of a name in unicode
     Given a name "Arthopyrenia hyalospora (Banker) D. Hall 1988 hyalosporis Kutz 1999"
-    When I run a Taxamatch::Parser function parse
+    When I run a Taxamatch::Atomizer function parse
     Then I should receive "Arthopyrenia" as genus epithet, "hyalospora" as species epithet, "Banker" and "D. Hall" as species authors, "1988" as a species year
     
   Scenario: normalize a string into ASCII upcase
