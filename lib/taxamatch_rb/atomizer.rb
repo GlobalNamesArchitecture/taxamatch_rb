@@ -12,7 +12,7 @@ module Taxamatch
   
     def parse(name)
       @res = {:all_authors => [], :all_years => []}
-      @parsed_raw = JSON.load(@parser.parse(name).to_json)['scientificName']
+      @parsed_raw = @parser.parse(name)[:scientificName]
       organize_results
     end
   
@@ -24,12 +24,12 @@ module Taxamatch
 
     def organize_results
       pr = @parsed_raw
-      return nil unless pr['parsed']
-      d = pr['details'][0]
-      process_node(:uninomial, d['uninomial'])
-      process_node(:genus, d['genus'])
-      process_node(:species, d['species'], true)
-      process_infraspecies(d['infraspecies'])
+      return nil unless pr[:parsed]
+      d = pr[:details][0]
+      process_node(:uninomial, d[:uninomial])
+      process_node(:genus, d[:genus])
+      process_node(:species, d[:species], true)
+      process_infraspecies(d[:infraspecies])
       @res[:all_authors] = @res[:all_authors].uniq.map {|a| Taxamatch::Normalizer.normalize(a)}
       @res[:all_years].uniq!
       @res.keys.size > 2 ? @res : nil
@@ -38,9 +38,9 @@ module Taxamatch
     def process_node(name, node, is_species = false)
       return unless node
       @res[name] = {}
-      @res[name][:epitheton] = node['epitheton']
-      @res[name][:normalized] = Taxamatch::Normalizer.normalize(node['epitheton'])
-      @res[name][:phonetized] = Taxamatch::Phonetizer.near_match(node['epitheton'], is_species)
+      @res[name][:epitheton] = node[:epitheton]
+      @res[name][:normalized] = Taxamatch::Normalizer.normalize(node[:epitheton])
+      @res[name][:phonetized] = Taxamatch::Phonetizer.near_match(node[:epitheton], is_species)
       get_authors_years(node, @res[name])
     end
   
@@ -49,9 +49,9 @@ module Taxamatch
       @res[:infraspecies] = []
       node.each do |infr|
         hsh = {}
-        hsh[:epitheton] = infr['epitheton']
-        hsh[:normalized] = Taxamatch::Normalizer.normalize(infr['epitheton'])
-        hsh[:phonetized] = Taxamatch::Phonetizer.near_match(infr['epitheton'], true)
+        hsh[:epitheton] = infr[:epitheton]
+        hsh[:normalized] = Taxamatch::Normalizer.normalize(infr[:epitheton])
+        hsh[:phonetized] = Taxamatch::Phonetizer.near_match(infr[:epitheton], true)
         get_authors_years(infr,hsh)
         @res[:infraspecies] << hsh
       end
@@ -60,13 +60,13 @@ module Taxamatch
     def get_authors_years(node, res)
       res[:authors] = []
       res[:years] = []
-      ['basionymAuthorTeam','combinationAuthorTeam'].each do |au|
+      [:basionymAuthorTeam, :combinationAuthorTeam].each do |au|
         if node[au]
-          res[:authors] += node[au]['author'] 
-          res[:years] << node[au]['year'] if node[au]['year']
-          if node[au]['exAuthorTeam']
-            res[:authors] += node[au]['exAuthorTeam']['author']
-            res[:years] << node[au]['exAuthorTeam']['year'] if node[au]['exAuthorTeam']['year']
+          res[:authors] += node[au][:author] 
+          res[:years] << node[au][:year] if node[au][:year]
+          if node[au][:exAuthorTeam]
+            res[:authors] += node[au][:exAuthorTeam][:author]
+            res[:years] << node[au][:exAuthorTeam][:year] if node[au][:exAuthorTeam][:year]
           end
         end
       end
@@ -78,11 +78,5 @@ module Taxamatch
     end
 
   end
-end
-
-if __FILE__ == $0
-  require 'pp'
-  p = Parser.new
-  puts p.parse('Salmonella werahensis (Castellani) Hauduroy and Ehringer in Hauduroy 1937')  
 end
 

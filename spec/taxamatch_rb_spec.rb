@@ -14,12 +14,13 @@ describe 'DamerauLevenshteinMod' do
   end
 end
 
-describe 'Parser' do
+describe 'Atomizer' do
   before(:all) do
     @parser = Taxamatch::Atomizer.new
   end
   
   it 'should parse uninomials' do
+    @parser.parse
     @parser.parse('Betula').should == {:all_authors=>[], :all_years=>[], :uninomial=>{:epitheton=>"Betula", :normalized=>"BETULA", :phonetized=>"BITILA", :authors=>[], :years=>[], :normalized_authors=>[]}}
     @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>["1872"], :uninomial=>{:epitheton=>"Aerenea", :normalized=>"AERENEA", :phonetized=>"ERINIA", :authors=>["Lacordaire"], :years=>["1872"], :normalized_authors=>["LACORDAIRE"]}}
   end
