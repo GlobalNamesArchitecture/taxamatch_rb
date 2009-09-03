@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{taxamatch_rb}
-  s.version = "0.5.7"
+  s.version = "0.5.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dmitry Mozzherin"]
-  s.date = %q{2009-08-17}
+  s.date = %q{2009-09-03}
   s.description = %q{This gem implements algorithsm for fuzzy matching scientific names developed by Tony Rees}
   s.email = %q{dmozzherin@eol.org}
   s.extra_rdoc_files = [

@@ -57,6 +57,7 @@ module Taxamatch
       genus2_length = genus2[:normalized].size
       match = false
       ed = @dlm.distance(genus1[:normalized], genus2[:normalized],1,3) #TODO put block = 2
+      return {'edit_distance' => ed, 'phonetic_match' => false, 'match' => false} if ed/[genus1_length, genus2_length].min > 0.2
       return {'edit_distance' => ed, 'phonetic_match' => true, 'match' => true} if genus1[:phonetized] == genus2[:phonetized] 
     
       match = true if ed <= 3 && ([genus1_length, genus2_length].min > ed * 2) && (ed < 2 || genus1[0] == genus2[0])
@@ -70,6 +71,7 @@ module Taxamatch
       sp2[:phonetized] = Taxamatch::Phonetizer.normalize_ending sp2[:phonetized]
       match = false
       ed = @dlm.distance(sp1[:normalized], sp2[:normalized], 1, 4) #TODO put block 4
+      return {'edit_distance' => ed, 'phonetic_match' => false, 'match' => false} if ed/[sp1_length, sp2_length].min > 0.3334
       #puts 's: %s, %s, %s' % [sp1[:normalized], sp2[:normalized], ed]
       return {'edit_distance' => ed, 'phonetic_match' => true, 'match' => true} if sp1[:phonetized] == sp2[:phonetized]
     
