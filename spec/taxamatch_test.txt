@@ -4,6 +4,11 @@
 # name1|name2|match|edit_distance
 #
 ##
+# Comparing uninomials
+Pomatomus|Pomatomas|true|1
+Pomatomus L.|Pomatomas Linn.|true|1
+Pomatomus Ber|Pomatomas Linn|false|1
+Pomatomus L. 1753|Pomatomus Linn. 1800|false|0
 
 ## additional authorship should match
 Puma concolor|Puma concolor L.|true|0
@@ -28,6 +33,12 @@ Homo sapiens Mozzherin|Homo sapiens Linneaus|false|0
 #
 Quinqueloculina punctata|Quinqueloculina punctata d'Orbigny 1905|true|0
 Pomatomus saltator (Linnaeus, 1766)|Pomatomus saltatrix (Linnaeus, 1766)|true|0|3
+#
+#Trinomial names
+Homo sapiens stupidus|Homo spiens stupidus|true|1
+Pomatomus saltator saltator L. 1753|Pomatomus saltator var. saltatror L. 1753|true|1
+Pomatomus saltator L. 1753|Pomatomus saltator var. saltatror L. 1753|false|5
+Pomatomus saltator saltator saltatorische|Pomatomus saltator soltator|true|1
 
 
 

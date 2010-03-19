@@ -20,7 +20,6 @@ describe 'Atomizer' do
   end
   
   it 'should parse uninomials' do
-    @parser.parse
     @parser.parse('Betula').should == {:all_authors=>[], :all_years=>[], :uninomial=>{:epitheton=>"Betula", :normalized=>"BETULA", :phonetized=>"BITILA", :authors=>[], :years=>[], :normalized_authors=>[]}}
     @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>["1872"], :uninomial=>{:epitheton=>"Aerenea", :normalized=>"AERENEA", :phonetized=>"ERINIA", :authors=>["Lacordaire"], :years=>["1872"], :normalized_authors=>["LACORDAIRE"]}}
   end
@@ -60,7 +59,7 @@ describe 'Taxamatch::Base' do
       if y
         y[2] = y[2] == 'true' ? true : false
         res = @tm.taxamatch(y[0], y[1], false)
-        #puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]] if res != y[2]
+        puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]] 
         res['match'].should == y[2]
         res['edit_distance'].should == y[3].to_i
       end

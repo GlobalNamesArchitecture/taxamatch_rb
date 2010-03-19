@@ -7,6 +7,7 @@ require 'taxamatch_rb/atomizer'
 require 'taxamatch_rb/normalizer'
 require 'taxamatch_rb/phonetizer'
 require 'taxamatch_rb/authmatch'
+require 'ruby-debug'
 
 $KCODE='u' if RUBY_VERSION.split('.')[1].to_i < 9  
 
@@ -41,15 +42,25 @@ module Taxamatch
     end
   
     def match_uninomial(preparsed_1, preparsed_2)
-      return false
+      match_genera(preparsed_1[:uninomial], preparsed_2[:uninomial])
     end
 
     def match_multinomial(preparsed_1, preparsed_2)
       gen_match = match_genera(preparsed_1[:genus], preparsed_2[:genus])
       sp_match = match_species(preparsed_1[:species], preparsed_2[:species])
       total_length = preparsed_1[:genus][:epitheton].size + preparsed_2[:genus][:epitheton].size + preparsed_1[:species][:epitheton].size + preparsed_2[:species][:epitheton].size
-      match = match_matches(gen_match, sp_match)
-      match.merge({'score' => (1 - match['edit_distance']/(total_length/2))})
+      if preparsed_1[:infraspecies] && preparsed_2[:infraspecies]
+        infrasp_match = match_species(preparsed_1[:infraspecies][0], preparsed_2[:infraspecies][0])
+        total_length += preparsed_1[:infraspecies][0][:epitheton].size + preparsed_2[:infraspecies][0][:epitheton].size
+        match_hash = match_matches(gen_match, sp_match, infrasp_match)
+      elsif (preparsed_1[:infraspecies] && !preparsed_2[:infraspecies]) || (!preparsed_1[:infraspecies] && preparsed_2[:infraspecies])
+        match_hash = { 'match' => false, 'edit_distance' => 5, 'phonetic_match' => false }
+        total_length += preparsed_1[:infraspecies] ? preparsed_1[:infraspecies][0][:epitheton].size : preparsed_2[:infraspecies][0][:epitheton].size 
+      else
+        match_hash = match_matches(gen_match, sp_match)
+      end
+      match_hash.merge({'score' => (1 - match_hash['edit_distance']/(total_length/2))})
+      match_hash
     end
   
     def match_genera(genus1, genus2)
@@ -87,10 +98,15 @@ module Taxamatch
       Taxamatch::Authmatch.authmatch(au1, au2, yr1, yr2)
     end
   
-    def match_matches(genus_match, species_match, infraspecies_matches = []) 
+    def match_matches(genus_match, species_match, infraspecies_match = nil) 
       match = species_match
+      if infraspecies_match
+        match['edit_distance'] += infraspecies_match['edit_distance']
+        match['match'] &&= infraspecies_match['match']
+        match['phonetic_match'] &&= infraspecies_match['phonetic_match']
+      end
       match['edit_distance'] += genus_match['edit_distance']
-      match['match'] = false if match['edit_distance'] > 4
+      match['match'] = false if match['edit_distance'] > (infraspecies_match ? 6 : 4)
       match['match'] &&= genus_match['match']
       match['phonetic_match'] &&= genus_match['phonetic_match']
       match
