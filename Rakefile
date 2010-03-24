@@ -12,7 +12,7 @@ begin
     gem.authors = ["Dmitry Mozzherin"]
     gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
     gem.add_dependency('RubyInline')
-    gem.add_dependency('dimus-biodiversity','>= 0.5.13')
+    gem.add_dependency('biodiversity','>= 0.5.13')
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 
