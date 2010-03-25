@@ -38,9 +38,9 @@ module Taxamatch
     def process_node(name, node, is_species = false)
       return unless node
       @res[name] = {}
-      @res[name][:epitheton] = node[:epitheton]
-      @res[name][:normalized] = Taxamatch::Normalizer.normalize(node[:epitheton])
-      @res[name][:phonetized] = Taxamatch::Phonetizer.near_match(node[:epitheton], is_species)
+      @res[name][:string] = node[:string]
+      @res[name][:normalized] = Taxamatch::Normalizer.normalize(node[:string])
+      @res[name][:phonetized] = Taxamatch::Phonetizer.near_match(node[:string], is_species)
       get_authors_years(node, @res[name])
     end
   
@@ -49,9 +49,9 @@ module Taxamatch
       @res[:infraspecies] = []
       node.each do |infr|
         hsh = {}
-        hsh[:epitheton] = infr[:epitheton]
-        hsh[:normalized] = Taxamatch::Normalizer.normalize(infr[:epitheton])
-        hsh[:phonetized] = Taxamatch::Phonetizer.near_match(infr[:epitheton], true)
+        hsh[:string] = infr[:string]
+        hsh[:normalized] = Taxamatch::Normalizer.normalize(infr[:string])
+        hsh[:phonetized] = Taxamatch::Phonetizer.near_match(infr[:string], true)
         get_authors_years(infr,hsh)
         @res[:infraspecies] << hsh
       end

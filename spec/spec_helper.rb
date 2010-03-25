@@ -24,5 +24,5 @@ end
 
 def make_taxamatch_hash(string)
   normalized = Taxamatch::Normalizer.normalize(string)
-  {:epitheton => string, :normalized => normalized, :phonetized => Taxamatch::Phonetizer.near_match(normalized)}
+  {:string => string, :normalized => normalized, :phonetized => Taxamatch::Phonetizer.near_match(normalized)}
 end

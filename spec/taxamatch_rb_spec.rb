@@ -7,7 +7,7 @@ describe 'DamerauLevenshteinMod' do
       dl = Taxamatch::DamerauLevenshteinMod.new
       if y
         res = dl.distance(y[0], y[1], y[3].to_i, y[2].to_i)
-        puts y if res != y[4].to_i
+        #puts y if res != y[4].to_i
         res.should == y[4].to_i
       end
     end
@@ -20,16 +20,16 @@ describe 'Atomizer' do
   end
   
   it 'should parse uninomials' do
-    @parser.parse('Betula').should == {:all_authors=>[], :all_years=>[], :uninomial=>{:epitheton=>"Betula", :normalized=>"BETULA", :phonetized=>"BITILA", :authors=>[], :years=>[], :normalized_authors=>[]}}
-    @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>["1872"], :uninomial=>{:epitheton=>"Aerenea", :normalized=>"AERENEA", :phonetized=>"ERINIA", :authors=>["Lacordaire"], :years=>["1872"], :normalized_authors=>["LACORDAIRE"]}}
+    @parser.parse('Betula').should == {:all_authors=>[], :all_years=>[], :uninomial=>{:string=>"Betula", :normalized=>"BETULA", :phonetized=>"BITILA", :authors=>[], :years=>[], :normalized_authors=>[]}}
+    @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>["1872"], :uninomial=>{:string=>"Aerenea", :normalized=>"AERENEA", :phonetized=>"ERINIA", :authors=>["Lacordaire"], :years=>["1872"], :normalized_authors=>["LACORDAIRE"]}}
   end
   
   it 'should parse binomials' do
-    @parser.parse('Leœptura laetifica Dow, 1913').should == {:all_authors=>["DOW"], :all_years=>["1913"], :genus=>{:epitheton=>"Leoeptura", :normalized=>"LEOEPTURA", :phonetized=>"LIPTIRA", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:epitheton=>"laetifica", :normalized=>"LAETIFICA", :phonetized=>"LITIFICA", :authors=>["Dow"], :years=>["1913"], :normalized_authors=>["DOW"]}}
+    @parser.parse('Leœptura laetifica Dow, 1913').should == {:all_authors=>["DOW"], :all_years=>["1913"], :genus=>{:string=>"Leoeptura", :normalized=>"LEOEPTURA", :phonetized=>"LIPTIRA", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"laetifica", :normalized=>"LAETIFICA", :phonetized=>"LITIFICA", :authors=>["Dow"], :years=>["1913"], :normalized_authors=>["DOW"]}}
   end
   
   it 'should parse trinomials' do 
-    @parser.parse('Hydnellum scrobiculatum zonatum (Banker) D. Hall et D.E. Stuntz 1972').should == {:all_authors=>["BANKER", "D HALL", "D E STUNTZ"], :all_years=>["1972"], :genus=>{:epitheton=>"Hydnellum", :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:epitheton=>"scrobiculatum", :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :authors=>[], :years=>[], :normalized_authors=>[]}, :infraspecies=>[{:epitheton=>"zonatum", :normalized=>"ZONATUM", :phonetized=>"ZANATA", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :years=>["1972"], :normalized_authors=>["BANKER", "D HALL", "D E STUNTZ"]}]}
+    @parser.parse('Hydnellum scrobiculatum zonatum (Banker) D. Hall et D.E. Stuntz 1972').should == {:all_authors=>["BANKER", "D HALL", "D E STUNTZ"], :all_years=>["1972"], :genus=>{:string=>"Hydnellum", :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"scrobiculatum", :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :authors=>[], :years=>[], :normalized_authors=>[]}, :infraspecies=>[{:string=>"zonatum", :normalized=>"ZONATUM", :phonetized=>"ZANATA", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :years=>["1972"], :normalized_authors=>["BANKER", "D HALL", "D E STUNTZ"]}]}
   end
 end
 
@@ -59,7 +59,7 @@ describe 'Taxamatch::Base' do
       if y
         y[2] = y[2] == 'true' ? true : false
         res = @tm.taxamatch(y[0], y[1], false)
-        puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]] 
+        #puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]] 
         res['match'].should == y[2]
         res['edit_distance'].should == y[3].to_i
       end

@@ -36,8 +36,8 @@ When /^I run a Taxamatch::Atomizer function parse$/ do
 end
 
 Then /^I should receive "([^\"]*)" as genus epithet, "([^\"]*)" as species epithet, "([^\"]*)" and "([^\"]*)" as species authors, "([^\"]*)" as a species year$/ do |gen_val, sp_val, au_val1, au_val2, yr_val|
-  result[:genus][:epitheton].should == gen_val
-  result[:species][:epitheton].should == sp_val
+  result[:genus][:string].should == gen_val
+  result[:species][:string].should == sp_val
   result[:species][:authors].include?(au_val1).should be_true
   result[:species][:authors].include?(au_val2).should be_true
   result[:species][:years].include?(yr_val).should be_true  

@@ -48,14 +48,14 @@ module Taxamatch
     def match_multinomial(preparsed_1, preparsed_2)
       gen_match = match_genera(preparsed_1[:genus], preparsed_2[:genus])
       sp_match = match_species(preparsed_1[:species], preparsed_2[:species])
-      total_length = preparsed_1[:genus][:epitheton].size + preparsed_2[:genus][:epitheton].size + preparsed_1[:species][:epitheton].size + preparsed_2[:species][:epitheton].size
+      total_length = preparsed_1[:genus][:string].size + preparsed_2[:genus][:string].size + preparsed_1[:species][:string].size + preparsed_2[:species][:string].size
       if preparsed_1[:infraspecies] && preparsed_2[:infraspecies]
         infrasp_match = match_species(preparsed_1[:infraspecies][0], preparsed_2[:infraspecies][0])
-        total_length += preparsed_1[:infraspecies][0][:epitheton].size + preparsed_2[:infraspecies][0][:epitheton].size
+        total_length += preparsed_1[:infraspecies][0][:string].size + preparsed_2[:infraspecies][0][:string].size
         match_hash = match_matches(gen_match, sp_match, infrasp_match)
       elsif (preparsed_1[:infraspecies] && !preparsed_2[:infraspecies]) || (!preparsed_1[:infraspecies] && preparsed_2[:infraspecies])
         match_hash = { 'match' => false, 'edit_distance' => 5, 'phonetic_match' => false }
-        total_length += preparsed_1[:infraspecies] ? preparsed_1[:infraspecies][0][:epitheton].size : preparsed_2[:infraspecies][0][:epitheton].size 
+        total_length += preparsed_1[:infraspecies] ? preparsed_1[:infraspecies][0][:string].size : preparsed_2[:infraspecies][0][:string].size 
       else
         match_hash = match_matches(gen_match, sp_match)
       end
