@@ -180,6 +180,7 @@ describe 'Taxamatch::Base' do
 
   it 'should return only boolean values' do
     @tm.taxamatch("AJLJljljlj", "sls").should_not be_nil
+    @tm.taxamatch('Olsl','a')
   end
 
 
