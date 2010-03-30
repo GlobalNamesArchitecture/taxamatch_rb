@@ -7,7 +7,6 @@ require 'taxamatch_rb/atomizer'
 require 'taxamatch_rb/normalizer'
 require 'taxamatch_rb/phonetizer'
 require 'taxamatch_rb/authmatch'
-require 'ruby-debug'
 
 $KCODE='u' if RUBY_VERSION.split('.')[1].to_i < 9  
 
