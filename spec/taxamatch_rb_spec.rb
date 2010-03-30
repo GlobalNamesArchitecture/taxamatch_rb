@@ -149,7 +149,7 @@ describe 'Taxamatch::Base' do
     @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => false, 'edit_distance' => 3}
   end
   
-  it 'should match mathes' do
+  it 'should match matches' do
     #No trobule case
     gmatch = {'match' => true, 'phonetic_match' => true, 'edit_distance' => 1}
     smatch = {'match' => true, 'phonetic_match' => true, 'edit_distance' => 1}
@@ -177,6 +177,11 @@ describe 'Taxamatch::Base' do
     smatch = {'match' => true, 'phonetic_match' => true, 'edit_distance' => 2}
     @tm.match_matches(gmatch, smatch).should == {'phonetic_match'=>true, 'edit_distance'=>4, 'match'=>true}
   end
+
+  it 'should return only boolean values' do
+    @tm.taxamatch("AJLJljljlj", "sls").should_not be_nil
+  end
+
 
   describe 'Taxamatch::Authmatch' do
     before(:all) do

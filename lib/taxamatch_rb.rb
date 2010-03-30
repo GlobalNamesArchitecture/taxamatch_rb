@@ -25,14 +25,14 @@ module Taxamatch
     def taxamatch(str1, str2, return_boolean = true) 
       preparsed_1 = @parser.parse(str1)
       preparsed_2 = @parser.parse(str2)
-      match = taxamatch_preparsed(preparsed_1, preparsed_2) rescue nil
+      match = taxamatch_preparsed(preparsed_1, preparsed_2) rescue false
       return_boolean && match ? match['match'] : match
     end
   
     #takes two hashes of parsed scientific names, analyses them and returns back 
     #this function is useful when species strings are preparsed.
     def taxamatch_preparsed(preparsed_1, preparsed_2)
-      result = nil
+      result = false
       result =  match_uninomial(preparsed_1, preparsed_2) if preparsed_1[:uninomial] && preparsed_2[:uninomial] 
       result =  match_multinomial(preparsed_1, preparsed_2) if preparsed_1[:genus] && preparsed_2[:genus]
       if result && result['match']
