@@ -59,7 +59,7 @@ describe 'Taxamatch::Base' do
       if y
         y[2] = y[2] == 'true' ? true : false
         res = @tm.taxamatch(y[0], y[1], false)
-        #puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]] 
+        puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]] 
         res['match'].should == y[2]
         res['edit_distance'].should == y[3].to_i
       end
@@ -89,16 +89,16 @@ describe 'Taxamatch::Base' do
     g2 = make_taxamatch_hash 'Pantheri'
     @tm.match_genera(g1, g2).should == {'phonetic_match' => false, 'edit_distance' => 1, 'match' => true}
     #phonetic match tramps everything
-    g1 = make_taxamatch_hash 'Xantheriiiiiiiiiiiiiii'
-    g2 = make_taxamatch_hash 'Zanthery'
+    g1 = make_taxamatch_hash 'Xaaaaantheriiiiiiiiiiiiiii'
+    g2 = make_taxamatch_hash 'Zaaaaaaaaaaaantheryyyyyyyy'
     @tm.match_genera(g1, g2).should == {'phonetic_match' => true, 'edit_distance' => 4, 'match' => true}
     #same first letter and distance 2 should match
-    g1 = make_taxamatch_hash 'Xantherii'
-    g2 = make_taxamatch_hash 'Xantherrr'
+    g1 = make_taxamatch_hash 'Xaaaantherii'
+    g2 = make_taxamatch_hash 'Xaaaantherrr'
     @tm.match_genera(g1, g2).should == {'phonetic_match' => false, 'match' => true, 'edit_distance' => 2}
     #First letter is the same and distance is 3 should match, no phonetic match
-    g1 = make_taxamatch_hash 'Xantheriii'
-    g2 = make_taxamatch_hash 'Xantherrrr'
+    g1 = make_taxamatch_hash 'Xaaaaaaaaaaantheriii'
+    g2 = make_taxamatch_hash 'Xaaaaaaaaaaantherrrr'
     @tm.match_genera(g1, g2).should == {'phonetic_match' => false, 'match' => true, 'edit_distance' => 3}
     #Should not match if one of words is shorter than 2x edit distance and distance is 2 or 3
     g1 = make_taxamatch_hash 'Xant'
@@ -116,24 +116,24 @@ describe 'Taxamatch::Base' do
     s2 = make_taxamatch_hash 'major'
     @tm.match_species(s1, s2).should ==  {'phonetic_match' => true, 'match' => true, 'edit_distance' => 0}
     #Phonetic match always works
-    s1 = make_taxamatch_hash 'xanteriiiiiiii'
-    s2 = make_taxamatch_hash 'zantereeeeeeee'
-    @tm.match_species(s1, s2).should ==  {'phonetic_match' => true, 'match' => true, 'edit_distance' => 5}
+    s1 = make_taxamatch_hash 'xanteriiieeeeeeeeeeeee'
+    s2 = make_taxamatch_hash 'zantereeeeeeeeeeeeeeee'
+    @tm.match_species(s1, s2).should ==  {'phonetic_match' => true, 'match' => true, 'edit_distance' => 4}
     #Phonetic match works with different endings
     s1 = make_taxamatch_hash 'majorum'
     s2 = make_taxamatch_hash 'majoris'
     @tm.match_species(s1, s2).should ==  {'phonetic_match' => true, 'match' => true, 'edit_distance' => 2}
     #Distance 4 matches if first 3 chars are the same
-    s1 = make_taxamatch_hash 'majorrrrr'
-    s2 = make_taxamatch_hash 'majoraaaa'
+    s1 = make_taxamatch_hash 'majjjjorrrrr'
+    s2 = make_taxamatch_hash 'majjjjoraaaa'
     @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => true, 'edit_distance' => 4}
     #Should not match if Distance 4 matches and first 3 chars are not the same
     s1 = make_taxamatch_hash 'majorrrrr'
     s2 = make_taxamatch_hash 'marorraaa'
     @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => false, 'edit_distance' => 4}
     #Distance 2 or 3 matches if first 1 char is the same
-    s1 = make_taxamatch_hash 'morrrr'
-    s2 = make_taxamatch_hash 'moraaa'
+    s1 = make_taxamatch_hash 'moooorrrr'
+    s2 = make_taxamatch_hash 'mooooraaa'
     @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => true, 'edit_distance' => 3}
     #Should not match if Distance 2 or 3 and first 1 char is not the same
     s1 = make_taxamatch_hash 'morrrr'

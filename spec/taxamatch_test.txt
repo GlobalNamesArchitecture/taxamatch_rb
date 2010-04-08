@@ -9,6 +9,7 @@ Pomatomus|Pomatomas|true|1
 Pomatomus L.|Pomatomas Linn.|true|1
 Pomatomus Ber|Pomatomas Linn|false|1
 Pomatomus L. 1753|Pomatomus Linn. 1800|false|0
+Patella|Abbella|false|3
 
 ## additional authorship should match
 Puma concolor|Puma concolor L.|true|0
@@ -17,7 +18,7 @@ Puma concolor|Puma concolor L.|true|0
 Puma concolor|Puma cancolor|true|1
 #
 Pomatomus saltatrix|Pomatomus saltratix|true|2
-Pomatomus saltator|Pomatomus saltatrix|true|3
+Pomatomus saltator|Pomatomus saltatrix|false|3 #!!!
 #
 Loligo pealeii|Loligo plei|false|3
 #

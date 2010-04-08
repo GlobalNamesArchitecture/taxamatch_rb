@@ -65,27 +65,29 @@ module Taxamatch
     def match_genera(genus1, genus2)
       genus1_length = genus1[:normalized].size
       genus2_length = genus2[:normalized].size
+      min_length = [genus1_length, genus2_length].min
       match = false
       ed = @dlm.distance(genus1[:normalized], genus2[:normalized],1,3) #TODO put block = 2
-      return {'edit_distance' => ed, 'phonetic_match' => false, 'match' => false} if ed/[genus1_length, genus2_length].min > 0.2
+      return {'edit_distance' => ed, 'phonetic_match' => false, 'match' => false} if ed/min_length.to_f > 0.2
       return {'edit_distance' => ed, 'phonetic_match' => true, 'match' => true} if genus1[:phonetized] == genus2[:phonetized] 
     
-      match = true if ed <= 3 && ([genus1_length, genus2_length].min > ed * 2) && (ed < 2 || genus1[0] == genus2[0])
+      match = true if ed <= 3 && (min_length > ed * 2) && (ed < 2 || genus1[0] == genus2[0])
       {'edit_distance' => ed, 'match' => match, 'phonetic_match' => false} 
     end
 
     def match_species(sp1, sp2)
       sp1_length = sp1[:normalized].size
       sp2_length = sp2[:normalized].size
+      min_length = [sp1_length, sp2_length].min
       sp1[:phonetized] = Taxamatch::Phonetizer.normalize_ending sp1[:phonetized]
       sp2[:phonetized] = Taxamatch::Phonetizer.normalize_ending sp2[:phonetized]
       match = false
       ed = @dlm.distance(sp1[:normalized], sp2[:normalized], 1, 4) #TODO put block 4
-      return {'edit_distance' => ed, 'phonetic_match' => false, 'match' => false} if ed/[sp1_length, sp2_length].min > 0.3334
+      return {'edit_distance' => ed, 'phonetic_match' => false, 'match' => false} if ed/min_length.to_f > 0.3334
       #puts 's: %s, %s, %s' % [sp1[:normalized], sp2[:normalized], ed]
       return {'edit_distance' => ed, 'phonetic_match' => true, 'match' => true} if sp1[:phonetized] == sp2[:phonetized]
     
-      match = true if ed <= 4 && ([sp1_length, sp2_length].min >= ed * 2) && (ed < 2 || sp1[:normalized][0] == sp2[:normalized][0]) && (ed < 4 || sp1[:normalized][0...3] == sp2[:normalized][0...3])
+      match = true if ed <= 4 && (min_length >= ed * 2) && (ed < 2 || sp1[:normalized][0] == sp2[:normalized][0]) && (ed < 4 || sp1[:normalized][0...3] == sp2[:normalized][0...3])
       { 'edit_distance' => ed, 'match' => match, 'phonetic_match' => false}
     end
   
