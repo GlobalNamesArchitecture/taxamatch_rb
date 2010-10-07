@@ -14,11 +14,7 @@ Taxamatch_Rb is compatible with ruby versions 1.8.7 and 1.9.1 and higher
 
 == Installation
 
-    sudo gem install dimus-taxamatch_rb --source http://gems.github.com
-
-or
-    sudo gem sources -a http://gems.github.com #(you only have to do this once)
-    sudo gem install dimus-taxamatch_rb
+    sudo gem install taxamatch_rb
 
 == Usage
 
