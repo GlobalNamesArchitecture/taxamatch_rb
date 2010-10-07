@@ -6,9 +6,9 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "taxamatch_rb"
     gem.summary = 'Implementation of Tony Rees Taxamatch algorithms'
-    gem.description = 'This gem implements algorithsm for fuzzy matching scientific names developed by Tony Rees'
+    gem.description = 'This gem implements algorithm for fuzzy matching scientific names developed by Tony Rees'
     gem.email = "dmozzherin@eol.org"
-    gem.homepage = "http://github.com/dimus/taxamatch_rb"
+    gem.homepage = "http://github.com/GlobalNamesArchitecture/taxamatch_rb"
     gem.authors = ["Dmitry Mozzherin"]
     gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
     gem.add_dependency('RubyInline')
