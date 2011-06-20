@@ -7,7 +7,7 @@ describe 'DamerauLevenshteinMod' do
       dl = Taxamatch::DamerauLevenshteinMod.new
       if y
         res = dl.distance(y[0], y[1], y[3].to_i, y[2].to_i)
-        #puts y if res != y[4].to_i
+        puts y if res != y[4].to_i
         res.should == y[4].to_i
       end
     end

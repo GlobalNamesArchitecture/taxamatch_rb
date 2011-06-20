@@ -2,8 +2,7 @@ require File.dirname(__FILE__) + "/../../lib/taxamatch_rb"
 
 gem 'cucumber'
 require 'cucumber'
-gem 'rspec'
-require 'spec'
+require 'rspec'
 
 Before do
   @tmp_root = File.dirname(__FILE__) + "/../../tmp"
