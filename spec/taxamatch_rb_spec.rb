@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require File.dirname(__FILE__) + '/spec_helper.rb'
+require 'spec_helper'
 
 describe 'DamerauLevenshteinMod' do
   it 'should get tests' do
@@ -18,17 +18,17 @@ describe 'Atomizer' do
   before(:all) do
     @parser = Taxamatch::Atomizer.new
   end
-  
+
   it 'should parse uninomials' do
     @parser.parse('Betula').should == {:all_authors=>[], :all_years=>[], :uninomial=>{:string=>"Betula", :normalized=>"BETULA", :phonetized=>"BITILA", :authors=>[], :years=>[], :normalized_authors=>[]}}
     @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>["1872"], :uninomial=>{:string=>"Aerenea", :normalized=>"AERENEA", :phonetized=>"ERINIA", :authors=>["Lacordaire"], :years=>["1872"], :normalized_authors=>["LACORDAIRE"]}}
   end
-  
+
   it 'should parse binomials' do
     @parser.parse('Leœptura laetifica Dow, 1913').should == {:all_authors=>["DOW"], :all_years=>["1913"], :genus=>{:string=>"Leoeptura", :normalized=>"LEOEPTURA", :phonetized=>"LIPTIRA", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"laetifica", :normalized=>"LAETIFICA", :phonetized=>"LITIFICA", :authors=>["Dow"], :years=>["1913"], :normalized_authors=>["DOW"]}}
   end
-  
-  it 'should parse trinomials' do 
+
+  it 'should parse trinomials' do
     @parser.parse('Hydnellum scrobiculatum zonatum (Banker) D. Hall et D.E. Stuntz 1972').should == {:all_authors=>["BANKER", "D HALL", "D E STUNTZ"], :all_years=>["1972"], :genus=>{:string=>"Hydnellum", :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"scrobiculatum", :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :authors=>[], :years=>[], :normalized_authors=>[]}, :infraspecies=>[{:string=>"zonatum", :normalized=>"ZONATUM", :phonetized=>"ZANATA", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :years=>["1972"], :normalized_authors=>["BANKER", "D HALL", "D E STUNTZ"]}]}
   end
 end
@@ -42,7 +42,7 @@ describe 'Taxamatch::Normalizer' do
     Taxamatch::Normalizer.normalize('Fallén').should == 'FALLEN'
     Taxamatch::Normalizer.normalize('Choriozopella trägårdhi').should == 'CHORIOZOPELLA TRAGARDHI'
   end
-  
+
   it 'should normalize words' do
     Taxamatch::Normalizer.normalize_word('L-3eœ|pt[ura$').should == 'L-3EOEPTURA'
   end
@@ -52,25 +52,25 @@ describe 'Taxamatch::Base' do
   before(:all) do
     @tm = Taxamatch::Base.new
   end
-  
+
   it 'should get txt tests' do
     dl = Taxamatch::DamerauLevenshteinMod.new
     read_test_file(File.expand_path(File.dirname(__FILE__)) + '/taxamatch_test.txt', 4) do |y|
       if y
         y[2] = y[2] == 'true' ? true : false
         res = @tm.taxamatch(y[0], y[1], false)
-        puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]] 
+        puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]]
         res['match'].should == y[2]
         res['edit_distance'].should == y[3].to_i
       end
     end
   end
-  
+
   it 'should work with names that cannot be parsed' do
     res = @tm.taxamatch('Quadraspidiotus ostreaeformis MacGillivray, 1921','Quadraspidiotus ostreaeformis Curtis)')
     res = false
   end
-  
+
   it 'should compare genera' do
     #edit distance 1 always match
     g1 = make_taxamatch_hash 'Plantago'
@@ -138,17 +138,17 @@ describe 'Taxamatch::Base' do
     #Should not match if Distance 2 or 3 and first 1 char is not the same
     s1 = make_taxamatch_hash 'morrrr'
     s2 = make_taxamatch_hash 'torraa'
-    @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => false, 'edit_distance' => 3} 
+    @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => false, 'edit_distance' => 3}
     #Distance 1 will match anywhere
     s1 = make_taxamatch_hash 'major'
     s2 = make_taxamatch_hash 'rajor'
-    @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => true, 'edit_distance' => 1} 
+    @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => true, 'edit_distance' => 1}
     #Will not match if distance 3 and length is less then twice of the edit distance
     s1 = make_taxamatch_hash 'marrr'
     s2 = make_taxamatch_hash 'maaaa'
     @tm.match_species(s1, s2).should == {'phonetic_match' => false, 'match' => false, 'edit_distance' => 3}
   end
-  
+
   it 'should match matches' do
     #No trobule case
     gmatch = {'match' => true, 'phonetic_match' => true, 'edit_distance' => 1}
@@ -159,7 +159,7 @@ describe 'Taxamatch::Base' do
     smatch = {'match' => true, 'phonetic_match' => true, 'edit_distance' => 1}
     @tm.match_matches(gmatch, smatch).should == {'phonetic_match'=>false, 'edit_distance'=>2, 'match'=>false}
     gmatch = {'match' => true, 'phonetic_match' => true, 'edit_distance' => 1}
-    smatch = {'match' => false, 'phonetic_match' => false, 'edit_distance' => 1}    
+    smatch = {'match' => false, 'phonetic_match' => false, 'edit_distance' => 1}
     @tm.match_matches(gmatch, smatch).should == {'phonetic_match'=>false, 'edit_distance'=>2, 'match'=>false}
     #Should not match if binomial edit distance > 4 NOTE: EVEN with full phonetic match
     gmatch = {'match' => true, 'phonetic_match' => true, 'edit_distance' => 3}
@@ -188,7 +188,7 @@ describe 'Taxamatch::Base' do
     before(:all) do
       @am = Taxamatch::Authmatch
     end
-    
+
     it 'should calculate score' do
       res = @am.authmatch(['Linnaeus', 'Muller'], ['L'], [], [1788])
       res.should == 90
@@ -219,22 +219,22 @@ describe 'Taxamatch::Base' do
       res = @am.authmatch(['Stepanov', 'Linnaeus', 'Muller'], ['Muller', 'Kurtz', 'Stepanov'], [1766], [1765])
       res.should == 0
     end
-    
+
     it 'should compare years' do
       @am.compare_years([1882],[1880]).should == 2
       @am.compare_years([1882],[]).should == nil
       @am.compare_years([],[]).should == 0
       @am.compare_years([1788,1798], [1788,1798]).should be_nil
     end
-    
-    it 'should remove duplicate authors' do 
+
+    it 'should remove duplicate authors' do
       #Li submatches Linnaeus and it its size 3 is big enought to remove Linnaeus
       #Muller is identical
       res = @am.remove_duplicate_authors(['Lin', 'Muller'], ['Linnaeus', 'Muller'])
       res.should == [[], []]
       #same in different order
       res = @am.remove_duplicate_authors(['Linnaeus', 'Muller'], ['Linn', 'Muller'])
-      res.should == [[], []]      
+      res.should == [[], []]
       #auth Li submatches Linnaeus, but Li size less then 3 required to remove Linnaeus
       res = @am.remove_duplicate_authors(['Dem', 'Li'], ['Linnaeus', 'Stepanov'])
       res.should == [["Dem"], ["Linnaeus", "Stepanov"]]
@@ -252,7 +252,7 @@ describe 'Taxamatch::Base' do
       # res = @am.fuzzy_match_authors('L', 'Muller')
       # res.should be_false
     end
-    
+
   end
 
 end
