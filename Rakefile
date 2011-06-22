@@ -43,23 +43,6 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.rcov = true
 end
 
-task :default => :spec
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  if File.exist?('VERSION.yml')
-    config = YAML.load(File.read('VERSION.yml'))
-    version = "#{config[:major]}.#{config[:minor]}.#{config[:patch]}"
-  else
-    version = ""
-  end
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "taxamatch_rb #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
 Rake::ExtensionTask.new("damerau_levenshtein") do |extension|
     extension.lib_dir = "lib/taxamatch_rb"
 end
@@ -68,3 +51,4 @@ task :build => [:clean, :compile]
 
 Rake::Task[:spec].prerequisites << :build
 
+task :default => :spec
