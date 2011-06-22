@@ -23,7 +23,7 @@ begin
     gem.authors = ["Dmitry Mozzherin"]
     gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
     gem.add_dependency('biodiversity','>= 0.5.13')
-    gem.add_dependency('ruby-compiler')
+    gem.add_dependency('rake-compiler')
     gem.extensions = FileList['ext/**/extconf.rb','ext/**/*.c', 'ext/**/*.h']
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
