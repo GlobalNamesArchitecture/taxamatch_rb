@@ -24,7 +24,6 @@ begin
     gem.files = FileList["[A-Z]*", "*.gemspec", "{bin,generators,lib,spec}/**/*"]
     gem.files -= FileList['lib/**/*.bundle', 'lib/**/*.dll', 'lib/**/*.so']
     gem.files += FileList['ext/**/*.c']
-    gem.add_dependency('biodiversity','>= 0.5.13')
     gem.extensions = FileList['ext/**/extconf.rb']
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
@@ -45,7 +44,7 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
 end
 
 Rake::ExtensionTask.new("damerau_levenshtein") do |extension|
-    extension.lib_dir = "lib/taxamatch_rb"
+    extension.lib_dir = "lib"
 end
 
 Rake::Task[:spec].prerequisites << :compile

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-require File.join(File.dirname(__FILE__), 'damerau_levenshtein')
+require 'damerau_levenshtein'
 
 module Taxamatch
 
