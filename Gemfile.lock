@@ -2,11 +2,10 @@ GEM
   remote: http://rubygems.org/
   specs:
     archive-tar-minitar (0.5.2)
-    biodiversity (0.5.16)
+    biodiversity (0.7.3)
       json
       treetop
-    biodiversity19 (0.5.16)
-      json
+    biodiversity19 (0.7.3)
       treetop
     builder (3.0.0)
     columnize (0.3.3)
@@ -61,8 +60,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  biodiversity (~> 0.5.13)
-  biodiversity19 (~> 0.5.13)
+  biodiversity (~> 0.7.3)
+  biodiversity19 (~> 0.7.3)
   bundler (~> 1.0.0)
   cucumber
   jeweler (~> 1.6.0)
