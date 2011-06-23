@@ -2,8 +2,8 @@ source "http://rubygems.org"
 require 'yaml'
 YAML::ENGINE.yamler= 'syck'
 
-gem "biodiversity","~> 0.5.13"
-gem "biodiversity19","~> 0.5.13"
+gem "biodiversity","~> 0.7.3"
+gem "biodiversity19","~> 0.7.3"
 
 
 group :development do
