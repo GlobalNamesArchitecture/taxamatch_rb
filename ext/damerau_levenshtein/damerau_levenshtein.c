@@ -1,22 +1,16 @@
-// Include the Ruby headers and goodies
 #include "ruby.h"
 
-// Defining a space for information and references about the module to be stored internally
 VALUE DamerauLevenshtein = Qnil;
 
-// Prototype for the initialization method - Ruby calls this, not you
 void Init_damerau_levenshtein();
 
-// Prototype for our method 'test1' - methods are prefixed by 'method_' here
 VALUE method_distance_utf(VALUE self, VALUE _s, VALUE _t, VALUE _block_size, VALUE _max_distance);
 
-// The initialization method for this module
 void Init_damerau_levenshtein() {
 	DamerauLevenshtein = rb_define_module("DamerauLevenshtein");
 	rb_define_method(DamerauLevenshtein, "distance_utf", method_distance_utf, 4);
 }
 
-// Our 'test1' method.. it simply returns a value of '10' for now.
 VALUE method_distance_utf(VALUE self, VALUE _s, VALUE _t, VALUE _block_size, VALUE _max_distance){
   int i, i1, j, j1, k, half_tl, cost, *d, distance, del, ins, subs, transp, block;
   int sl, tl, half_sl;
