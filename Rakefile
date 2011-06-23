@@ -21,9 +21,10 @@ begin
     gem.email = "dmozzherin@eol.org"
     gem.homepage = "http://github.com/GlobalNamesArchitecture/taxamatch_rb"
     gem.authors = ["Dmitry Mozzherin"]
-    gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"]
+    gem.files = FileList["[A-Z]*", "*.gemspec", "{bin,generators,lib,spec}/**/*"]
+    gem.files -= FileList['lib/**/*.bundle', 'lib/**/*.dll', 'lib/**/*.so']
+    gem.files += FileList['ext/**/*.c']
     gem.add_dependency('biodiversity','>= 0.5.13')
-    gem.add_dependency('rake-compiler')
     gem.extensions = FileList['ext/**/extconf.rb']
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
@@ -47,8 +48,6 @@ Rake::ExtensionTask.new("damerau_levenshtein") do |extension|
     extension.lib_dir = "lib/taxamatch_rb"
 end
 
-task :build => [:clean, :compile]
-
-Rake::Task[:spec].prerequisites << :build
+Rake::Task[:spec].prerequisites << :compile
 
 task :default => :spec
