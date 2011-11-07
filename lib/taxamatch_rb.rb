@@ -8,6 +8,7 @@ require 'taxamatch_rb/normalizer'
 require 'taxamatch_rb/phonetizer'
 require 'taxamatch_rb/authmatch'
 
+raise "IMPORTANT: Parsley-store gem  requires ruby >= 1.9.1" if RUBY_VERSION < "1.9.1"
 $KCODE='u' if RUBY_VERSION.split('.')[1].to_i < 9
 
 module Taxamatch
