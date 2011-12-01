@@ -4,7 +4,7 @@ module Taxamatch
   
   module Normalizer
     def self.normalize(string)
-      utf8_to_ascii(string).upcase
+      utf8_to_ascii(string.strip).upcase
     end
   
     def self.normalize_word(word)
@@ -17,6 +17,7 @@ module Taxamatch
 
   protected
     def self.utf8_to_ascii(string)
+      string = string.gsub(/\s{2,}/, ' ')
       string = string.gsub(/[ÀÂÅÃÄÁẤẠ]/, "A")
       string = string.gsub(/[ÉÈÊË]/, "E")
       string = string.gsub(/[ÍÌÎÏ]/, "I")
