@@ -40,7 +40,7 @@ module Taxamatch
       string = string.gsub(/[úùûüůưừựủứụ]/, "u")
       string = string.gsub(/[žź]/, "z")
       string = string.gsub(/[ýÿỹ]/, "y")
-      string = string.gsub(/[đ]/, "d")
+      string = string.gsub(/[đð]/, "d")
       string = string.gsub(/æ/, "ae")
       string = string.gsub(/[čćç]/, "c")
       string = string.gsub(/[ñńň]/, "n")
