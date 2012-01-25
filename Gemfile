@@ -2,7 +2,7 @@ source "http://rubygems.org"
 require 'yaml'
 # YAML::ENGINE.yamler= 'syck'
 
-gem "biodiversity19",">= 1.0.9"
+gem "biodiversity19",">= 1.0.10"
 
 
 group :development do
