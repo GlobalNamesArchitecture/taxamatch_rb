@@ -11,20 +11,18 @@ module Taxamatch
     end
   
     def parse(name)
-      @res = {:all_authors => [], :all_years => []}
       @parsed_raw = @parser.parse(name)[:scientificName]
-      organize_results
+      organize_results(@parsed_raw)
     end
   
     def parsed_raw
       return @parsed_raw
     end
 
-  protected
-
-    def organize_results
-      pr = @parsed_raw
+    def organize_results(parsed_raw)
+      pr = parsed_raw
       return nil unless pr[:parsed]
+      @res = {:all_authors => [], :all_years => []}
       d = pr[:details][0]
       process_node(:uninomial, d[:uninomial])
       process_node(:genus, d[:genus])
@@ -35,6 +33,8 @@ module Taxamatch
       @res.keys.size > 2 ? @res : nil
     end
   
+    private
+
     def process_node(name, node, is_species = false)
       return unless node
       @res[name] = {}

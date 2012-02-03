@@ -43,6 +43,14 @@ Then /^I should receive "([^\"]*)" as genus epithet, "([^\"]*)" as species epith
   result[:species][:years].include?(yr_val).should be_true  
 end
 
+Given /^a preparsed "([^"]*)"$/ do |arg1|
+  parser.parse(sci_name)
+end
+
+When /^I run a Taxamatch::Atomizer function organize_results$/ do
+  result = parser.organize_results(parser.parsed_raw)
+end
+
 #############
 # NORMALIZER
 #############
