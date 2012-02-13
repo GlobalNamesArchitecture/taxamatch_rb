@@ -15,6 +15,7 @@ GEM
       gherkin (~> 2.4.1)
       json (>= 1.4.6)
       term-ansicolor (>= 1.0.5)
+    damerau-levenshtein (0.5.4)
     diff-lcs (1.1.2)
     gherkin (2.4.1)
       json (>= 1.4.6)
@@ -65,6 +66,7 @@ DEPENDENCIES
   biodiversity19 (>= 1.0.10)
   bundler (~> 1.0.0)
   cucumber
+  damerau-levenshtein (>= 0.5.4)
   jeweler (~> 1.6.0)
   mocha
   rake-compiler

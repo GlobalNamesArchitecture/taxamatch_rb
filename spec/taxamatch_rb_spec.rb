@@ -1,19 +1,6 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe 'DamerauLevenshteinMod' do
-  it 'should get tests' do
-    read_test_file(File.expand_path(File.dirname(__FILE__)) + '/damerau_levenshtein_mod_test.txt', 5) do |y|
-      dl = Taxamatch::DamerauLevenshteinMod.new
-      if y
-        res = dl.distance(y[0], y[1], y[3].to_i, y[2].to_i)
-        puts y if res != y[4].to_i
-        res.should == y[4].to_i
-      end
-    end
-  end
-end
-
 describe 'Atomizer' do
   before(:all) do
     @parser = Taxamatch::Atomizer.new
@@ -54,12 +41,11 @@ describe 'Taxamatch::Base' do
   end
 
   it 'should get txt tests' do
-    dl = Taxamatch::DamerauLevenshteinMod.new
     read_test_file(File.expand_path(File.dirname(__FILE__)) + '/taxamatch_test.txt', 4) do |y|
       if y
         y[2] = y[2] == 'true' ? true : false
         res = @tm.taxamatch(y[0], y[1], false)
-        puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]]
+        # puts "%s, %s, %s, %s" % [y[0], y[1], y[2], y[3]]
         res['match'].should == y[2]
         res['edit_distance'].should == y[3].to_i
       end

@@ -18,7 +18,7 @@ Feature: Find if two scientific names are lexical variants of each other
 
   Scenario: find edit distance between two unicode (utf8) strings
     Given strings "Sjostedt" and "Sojstedt", transposition block size "1", and a maximum allowed distance "4"
-    When I run "Taxamatch::DamerauLevenshteinMod" instance function "distance"
+    When I run "DamerauLevenshtein" function "distance"
     Then I should receive edit distance "1"
 
   Scenario: find parts of a name in unicode

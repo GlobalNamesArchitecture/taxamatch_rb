@@ -16,6 +16,11 @@ When /^I run "([^\"]*)" instance function "([^\"]*)"$/ do |arg1, arg2|
   distance = dl.distance(str1, str2, block_size, max_distance)
 end
 
+When /^I run "([^\"]*)" function "([^\"]*)"$/ do |arg1, arg2|
+  dl = eval(arg1)
+  distance = dl.distance(str1, str2, block_size, max_distance)
+end
+
 Then /^I should receive edit distance "([^\"]*)"$/ do |arg1|
   distance.should == arg1.to_i
 end

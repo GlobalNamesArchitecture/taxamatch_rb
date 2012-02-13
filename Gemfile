@@ -3,6 +3,7 @@ require 'yaml'
 # YAML::ENGINE.yamler= 'syck'
 
 gem "biodiversity19",">= 1.0.10"
+gem "damerau-levenshtein", ">= 0.5.4"
 
 
 group :development do

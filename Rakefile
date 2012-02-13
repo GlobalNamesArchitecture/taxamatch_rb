@@ -10,7 +10,6 @@ rescue Bundler::BundlerError => e
 end
 
 require 'rake'
-require 'rake/extensiontask'
 
 begin
   require 'jeweler'
@@ -42,11 +41,5 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.pattern = 'spec/**/*_spec.rb'
   spec.rcov = true
 end
-
-Rake::ExtensionTask.new("damerau_levenshtein") do |extension|
-    extension.lib_dir = "lib"
-end
-
-Rake::Task[:spec].prerequisites << :compile
 
 task :default => :spec
