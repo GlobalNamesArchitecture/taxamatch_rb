@@ -45,7 +45,7 @@ Then /^I should receive "([^\"]*)" as genus epithet, "([^\"]*)" as species epith
   result[:species][:string].should == sp_val
   result[:species][:authors].include?(au_val1).should be_true
   result[:species][:authors].include?(au_val2).should be_true
-  result[:species][:years].include?(yr_val).should be_true  
+  result[:species][:years].include?(yr_val.to_i).should be_true  
 end
 
 Given /^a preparsed "([^"]*)"$/ do |arg1|

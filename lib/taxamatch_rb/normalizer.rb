@@ -15,7 +15,14 @@ module Taxamatch
       self.normalize(string).gsub(/[^A-Z]/, ' ').gsub(/[\s]{2,}/, ' ').strip
     end
 
-  protected
+    def self.normalize_year(year_string)
+      year_int = year_string.gsub(/[^\d]/, '').to_i
+      year_int = nil unless year_int.between?(1700, Time.now.year + 1)
+      year_int
+    end
+      
+
+  private
     def self.utf8_to_ascii(string)
       string = string.gsub(/\s{2,}/, ' ')
       string = string.gsub(/[ÀÂÅÃÄÁẤẠ]/, "A")

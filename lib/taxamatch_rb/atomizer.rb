@@ -62,11 +62,17 @@ module Taxamatch
       res[:years] = []
       [:basionymAuthorTeam, :combinationAuthorTeam].each do |au|
         if node[au]
-          res[:authors] += node[au][:author] 
-          res[:years] << node[au][:year] if node[au][:year]
+          res[:authors] += node[au][:author]
+          if node[au][:year]
+            year = Taxamatch::Normalizer.normalize_year(node[au][:year])
+            res[:years] << year if year
+          end
           if node[au][:exAuthorTeam]
             res[:authors] += node[au][:exAuthorTeam][:author]
-            res[:years] << node[au][:exAuthorTeam][:year] if node[au][:exAuthorTeam][:year]
+            if node[au][:exAuthorTeam][:year]
+              year = Taxamatch::Normalizer.normalize_year(node[:exAuthorTeam][:year])
+              res[:years] << year if year
+            end
           end
         end
       end

@@ -8,15 +8,20 @@ describe 'Atomizer' do
 
   it 'should parse uninomials' do
     @parser.parse('Betula').should == {:all_authors=>[], :all_years=>[], :uninomial=>{:string=>"Betula", :normalized=>"BETULA", :phonetized=>"BITILA", :authors=>[], :years=>[], :normalized_authors=>[]}}
-    @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>["1872"], :uninomial=>{:string=>"Aerenea", :normalized=>"AERENEA", :phonetized=>"ERINIA", :authors=>["Lacordaire"], :years=>["1872"], :normalized_authors=>["LACORDAIRE"]}}
+    @parser.parse('Ærenea Lacordaire, 1872').should == {:all_authors=>["LACORDAIRE"], :all_years=>[1872], :uninomial=>{:string=>"Aerenea", :normalized=>"AERENEA", :phonetized=>"ERINIA", :authors=>["Lacordaire"], :years=>[1872], :normalized_authors=>["LACORDAIRE"]}}
   end
 
   it 'should parse binomials' do
-    @parser.parse('Leœptura laetifica Dow, 1913').should == {:all_authors=>["DOW"], :all_years=>["1913"], :genus=>{:string=>"Leoeptura", :normalized=>"LEOEPTURA", :phonetized=>"LIPTIRA", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"laetifica", :normalized=>"LAETIFICA", :phonetized=>"LITIFICA", :authors=>["Dow"], :years=>["1913"], :normalized_authors=>["DOW"]}}
+    @parser.parse('Leœptura laetifica Dow, 1913').should == {:all_authors=>["DOW"], :all_years=>[1913], :genus=>{:string=>"Leoeptura", :normalized=>"LEOEPTURA", :phonetized=>"LIPTIRA", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"laetifica", :normalized=>"LAETIFICA", :phonetized=>"LITIFICA", :authors=>["Dow"], :years=>[1913], :normalized_authors=>["DOW"]}}
   end
 
   it 'should parse trinomials' do
-    @parser.parse('Hydnellum scrobiculatum zonatum (Banker) D. Hall et D.E. Stuntz 1972').should == {:all_authors=>["BANKER", "D HALL", "D E STUNTZ"], :all_years=>["1972"], :genus=>{:string=>"Hydnellum", :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"scrobiculatum", :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :authors=>[], :years=>[], :normalized_authors=>[]}, :infraspecies=>[{:string=>"zonatum", :normalized=>"ZONATUM", :phonetized=>"ZANATA", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :years=>["1972"], :normalized_authors=>["BANKER", "D HALL", "D E STUNTZ"]}]}
+    @parser.parse('Hydnellum scrobiculatum zonatum (Banker) D. Hall et D.E. Stuntz 1972').should == {:all_authors=>["BANKER", "D HALL", "D E STUNTZ"], :all_years=>[1972], :genus=>{:string=>"Hydnellum", :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"scrobiculatum", :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :authors=>[], :years=>[], :normalized_authors=>[]}, :infraspecies=>[{:string=>"zonatum", :normalized=>"ZONATUM", :phonetized=>"ZANATA", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :years=>[1972], :normalized_authors=>["BANKER", "D HALL", "D E STUNTZ"]}]}
+  end
+
+  it 'should normalize years to integers' do
+    future_year = Time.now.year + 10
+    @parser.parse("Hydnellum scrobiculatum Kern #{future_year} zonatum (Banker) D. Hall et D.E. Stuntz 1972?").should == {:all_authors=>["KERN", "BANKER", "D HALL", "D E STUNTZ"], :all_years=>[1972], :genus=>{:string=>"Hydnellum", :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"scrobiculatum", :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :authors=>["Kern"], :years=>[], :normalized_authors=>["KERN"]}, :infraspecies=>[{:string=>"zonatum", :normalized=>"ZONATUM", :phonetized=>"ZANATA", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :years=>[1972], :normalized_authors=>["BANKER", "D HALL", "D E STUNTZ"]}]}
   end
 end
 
