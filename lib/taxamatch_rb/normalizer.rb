@@ -17,7 +17,7 @@ module Taxamatch
 
     def self.normalize_year(year_string)
       year_int = year_string.gsub(/[^\d]/, '').to_i
-      year_int = nil unless year_int.between?(1700, Time.now.year + 1)
+      year_int = nil unless year_int.between?(1757, Time.now.year + 1)
       year_int
     end
       
