@@ -70,7 +70,7 @@ module Taxamatch
           if node[au][:exAuthorTeam]
             res[:authors] += node[au][:exAuthorTeam][:author]
             if node[au][:exAuthorTeam][:year]
-              year = Taxamatch::Normalizer.normalize_year(node[:exAuthorTeam][:year])
+              year = Taxamatch::Normalizer.normalize_year(node[au][:exAuthorTeam][:year])
               res[:years] << year if year
             end
           end
