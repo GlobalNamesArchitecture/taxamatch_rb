@@ -24,6 +24,7 @@ module Taxamatch
       return nil unless pr[:parsed]
       @res = {:all_authors => [], :all_years => []}
       d = pr[:details][0]
+      @res[:canonical_form] = pr[:canonical]
       process_node(:uninomial, d[:uninomial])
       process_node(:genus, d[:genus])
       process_node(:species, d[:species], true)
