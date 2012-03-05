@@ -63,12 +63,17 @@ module Taxamatch
       match_hash
     end
 
-    def match_genera(genus1, genus2)
+    def match_genera(genus1, genus2, opts = {})
       genus1_length = genus1[:normalized].size
       genus2_length = genus2[:normalized].size
+      opts = {:with_phonetic_match => true}.merge(opts)
       min_length = [genus1_length, genus2_length].min
+      unless opts[:with_phonetic_match] 
+        genus1[:phonetized] = "A"
+        genus2[:phonetized] = "B"
+      end
       match = false
-      ed = @dlm.distance(genus1[:normalized], genus2[:normalized],1,3) #TODO put block = 2
+      ed = @dlm.distance(genus1[:normalized], genus2[:normalized], 1, 3) #TODO put block = 2
       return {'edit_distance' => ed, 'phonetic_match' => false, 'match' => false} if ed/min_length.to_f > 0.2
       return {'edit_distance' => ed, 'phonetic_match' => true, 'match' => true} if genus1[:phonetized] == genus2[:phonetized]
 
@@ -76,10 +81,15 @@ module Taxamatch
       {'edit_distance' => ed, 'match' => match, 'phonetic_match' => false}
     end
 
-    def match_species(sp1, sp2)
+    def match_species(sp1, sp2, opts = {})
       sp1_length = sp1[:normalized].size
       sp2_length = sp2[:normalized].size
+      opts = {:with_phonetic_match => true}.merge(opts)
       min_length = [sp1_length, sp2_length].min
+      unless opts[:with_phonetic_match]
+        sp1[:phonetized] = "A"
+        sp2[:phonetized] = "B"
+      end 
       sp1[:phonetized] = Taxamatch::Phonetizer.normalize_ending sp1[:phonetized]
       sp2[:phonetized] = Taxamatch::Phonetizer.normalize_ending sp2[:phonetized]
       match = false
