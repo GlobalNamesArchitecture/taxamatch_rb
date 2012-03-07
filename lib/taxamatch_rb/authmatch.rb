@@ -76,7 +76,7 @@ module Taxamatch
       au1_length = author1.size
       au2_length = author2.size
       dlm = DamerauLevenshtein
-      ed = dlm.distance(author1, author2,2,3) #get around a bug in C code, but it really has to be fixed
+      ed = dlm.distance(author1, author2,1,3) #get around a bug in C code, but it really has to be fixed
       (ed <= 3 && ([au1_length, au2_length].min > ed * 2) && (ed < 2 || author1[0] == author2[0]))
     end
 

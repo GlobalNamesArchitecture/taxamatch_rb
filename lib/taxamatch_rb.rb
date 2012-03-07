@@ -103,10 +103,22 @@ module Taxamatch
     end
 
     def match_authors(preparsed_1, preparsed_2)
-      au1 = preparsed_1[:all_authors]
-      au2 = preparsed_2[:all_authors]
-      yr1 = preparsed_1[:all_years]
-      yr2 = preparsed_2[:all_years]
+      p1 = { :normalized_authors => [], :years => [] }
+      p2 = { :normalized_authors => [], :years => [] }
+      if preparsed_1[:uninomial] && preparsed_2[:uninomial]
+        p1 = preparsed_1[:uninomial]
+        p2 = preparsed_2[:uninomial]
+      elsif preparsed_1[:species] && preparsed_2[:species]
+        p1 = preparsed_1[:species]
+        p2 = preparsed_2[:species]
+      elsif preparsed_1[:infraspecies] && preparsed_2[:infraspecies]
+        p1 = preparsed_1[:infraspecies].last
+        p2 = preparsed_2[:infraspecies].last
+      end
+      au1 = p1[:normalized_authors]
+      au2 = p2[:normalized_authors]
+      yr1 = p1[:years]
+      yr2 = p2[:years]
       Taxamatch::Authmatch.authmatch(au1, au2, yr1, yr2)
     end
 

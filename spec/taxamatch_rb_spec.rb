@@ -178,6 +178,17 @@ describe 'Taxamatch::Base' do
     @tm.taxamatch("AJLJljljlj", "sls").should_not be_nil
     @tm.taxamatch('Olsl','a')
   end
+  
+  it "should not match authors from different parts of name" do
+    parser = Taxamatch::Atomizer.new
+    t = Taxamatch::Base.new
+    n1 = parser.parse "Betula Linnaeus"
+    n2 = parser.parse "Betula alba Linnaeus"
+    n3 = parser.parse "Betula alba alba Linnaeus"
+    n3 = parser.parse "Betula alba L."
+    require 'ruby-debug'; debugger
+    t.match_authors(n1, n2).should == ''
+  end
 
 
   describe 'Taxamatch::Authmatch' do
@@ -244,9 +255,8 @@ describe 'Taxamatch::Base' do
     end
 
     it 'should fuzzy match authors' do
-      #TODO: fix the bug revealed by this test
-      # res = @am.fuzzy_match_authors('L', 'Muller')
-      # res.should be_false
+      res = @am.fuzzy_match_authors('L', 'Muller')
+      res.should be_false
     end
 
   end
