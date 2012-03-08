@@ -185,9 +185,28 @@ describe 'Taxamatch::Base' do
     n1 = parser.parse "Betula Linnaeus"
     n2 = parser.parse "Betula alba Linnaeus"
     n3 = parser.parse "Betula alba alba Linnaeus"
-    n3 = parser.parse "Betula alba L."
-    require 'ruby-debug'; debugger
-    t.match_authors(n1, n2).should == ''
+    n4 = parser.parse "Betula alba L."
+    n5 = parser.parse "Betula alba"
+    n6 = parser.parse "Betula olba"
+    n7 = parser.parse "Betula alba Linnaeus alba"
+    n8 = parser.parse "Betula alba Linnaeus alba Smith"
+    n9 = parser.parse "Betula alba Smith alba L."
+    n10 = parser.parse "Betula Linn."
+    #if one authorship is empty, return 0
+    t.match_authors(n1, n5).should == 0
+    t.match_authors(n5, n1).should == 0
+    t.match_authors(n5, n6).should == 0
+    #if authorship matches on different levels ignore  
+    t.match_authors(n7, n3).should == 0
+    t.match_authors(n8, n3).should == -1
+    t.match_authors(n2, n8).should == 0
+    t.match_authors(n1, n2).should == 0
+    # match on infraspecies level
+    t.match_authors(n9, n3).should == 1
+    # match on species level
+    t.match_authors(n2, n4).should == 1
+    # match on uninomial level
+    t.match_authors(n1, n10).should == 1
   end
 
 

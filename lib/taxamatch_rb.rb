@@ -36,7 +36,7 @@ module Taxamatch
       result =  match_uninomial(preparsed_1, preparsed_2) if preparsed_1[:uninomial] && preparsed_2[:uninomial]
       result =  match_multinomial(preparsed_1, preparsed_2) if preparsed_1[:genus] && preparsed_2[:genus]
       if result && result['match']
-        result['match'] = match_authors(preparsed_1, preparsed_2) == 0 ? false : true
+        result['match'] = match_authors(preparsed_1, preparsed_2) == -1 ? false : true
       end
       return result
     end
@@ -105,21 +105,23 @@ module Taxamatch
     def match_authors(preparsed_1, preparsed_2)
       p1 = { :normalized_authors => [], :years => [] }
       p2 = { :normalized_authors => [], :years => [] }
-      if preparsed_1[:uninomial] && preparsed_2[:uninomial]
+      if preparsed_1[:infraspecies] || preparsed_2[:infraspecies]
+        p1 = preparsed_1[:infraspecies].last if preparsed_1[:infraspecies] 
+        p2 = preparsed_2[:infraspecies].last if preparsed_2[:infraspecies]
+      elsif preparsed_1[:species] || preparsed_2[:species]
+        p1 = preparsed_1[:species] if preparsed_1[:species]
+        p2 = preparsed_2[:species] if preparsed_2[:species]
+      elsif preparsed_1[:uninomial] && preparsed_2[:uninomial]
         p1 = preparsed_1[:uninomial]
         p2 = preparsed_2[:uninomial]
-      elsif preparsed_1[:species] && preparsed_2[:species]
-        p1 = preparsed_1[:species]
-        p2 = preparsed_2[:species]
-      elsif preparsed_1[:infraspecies] && preparsed_2[:infraspecies]
-        p1 = preparsed_1[:infraspecies].last
-        p2 = preparsed_2[:infraspecies].last
       end
       au1 = p1[:normalized_authors]
       au2 = p2[:normalized_authors]
       yr1 = p1[:years]
       yr2 = p2[:years]
-      Taxamatch::Authmatch.authmatch(au1, au2, yr1, yr2)
+      return 0 if au1.empty? || au2.empty? 
+      score = Taxamatch::Authmatch.authmatch(au1, au2, yr1, yr2)
+      score == 0 ? -1 : 1
     end
 
     def match_matches(genus_match, species_match, infraspecies_match = nil)
