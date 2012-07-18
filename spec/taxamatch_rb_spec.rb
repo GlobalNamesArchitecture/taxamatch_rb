@@ -32,6 +32,8 @@ describe 'Taxamatch::Normalizer' do
     Taxamatch::Normalizer.normalize('Leœptura').should == 'LEOEPTURA'
     Taxamatch::Normalizer.normalize('Ærenea').should == 'AERENEA'
     Taxamatch::Normalizer.normalize('Fallén').should == 'FALLEN'
+    Taxamatch::Normalizer.normalize('Fallé€n').should == 'FALLE?N'
+    Taxamatch::Normalizer.normalize('Fallén привет').should == 'FALLEN ??????'
     Taxamatch::Normalizer.normalize('Choriozopella trägårdhi').should == 'CHORIOZOPELLA TRAGARDHI'
   end
 

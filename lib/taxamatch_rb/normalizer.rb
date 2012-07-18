@@ -4,7 +4,7 @@ module Taxamatch
   
   module Normalizer
     def self.normalize(string)
-      utf8_to_ascii(string.strip).upcase
+      utf8_to_ascii(string.strip).upcase.gsub(/[^\x00-\x7F]/,'?')
     end
   
     def self.normalize_word(word)
@@ -25,7 +25,7 @@ module Taxamatch
   private
     def self.utf8_to_ascii(string)
       string = string.gsub(/\s{2,}/, ' ')
-      string = string.gsub(/[ÀÂÅÃÄÁẤẠ]/, "A")
+      string = string.gsub(/[ÀÂÅÃÄÁẤẠÁ]/, "A")
       string = string.gsub(/[ÉÈÊË]/, "E")
       string = string.gsub(/[ÍÌÎÏ]/, "I")
       string = string.gsub(/[ÓÒÔØÕÖỚỔ]/, "O")
@@ -40,11 +40,11 @@ module Taxamatch
       string = string.gsub(/Œ/, "OE")
       string = string.gsub(/ß/, "B")
       string = string.gsub(/Ķ/, "K")
-      string = string.gsub(/[áàâåãäăãắảạậầằ]/, "a")
+      string = string.gsub(/[áàâåãäăãắảạậầằá]/, "a")
       string = string.gsub(/[éèêëĕěếệểễềẻ]/, "e")
       string = string.gsub(/[íìîïǐĭīĩỉï]/, "i")
-      string = string.gsub(/[óòôøõöŏỏỗộơọỡốơồờớổ]/, "o")
-      string = string.gsub(/[úùûüůưừựủứụ]/, "u")
+      string = string.gsub(/[óòôøõöŏỏỗộơọỡốơồờớổő]/, "o")
+      string = string.gsub(/[úùûüůưừựủứụű]/, "u")
       string = string.gsub(/[žź]/, "z")
       string = string.gsub(/[ýÿỹ]/, "y")
       string = string.gsub(/[đð]/, "d")
