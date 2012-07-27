@@ -1,3 +1,6 @@
+0.9.3 - Taxamatch::Normalizer substitutes multiplication sign to 'x' 
+(lowcase) instead of '?'
+
 0.9.2 - Taxamatch::Normalizer.normalize always returns only ASCII 
 characters, all utf-8 characters unknown to normalizer are becoming '?'
 

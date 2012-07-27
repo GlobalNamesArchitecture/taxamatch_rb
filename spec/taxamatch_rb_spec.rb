@@ -35,6 +35,7 @@ describe 'Taxamatch::Normalizer' do
     Taxamatch::Normalizer.normalize('Fallé€n').should == 'FALLE?N'
     Taxamatch::Normalizer.normalize('Fallén привет').should == 'FALLEN ??????'
     Taxamatch::Normalizer.normalize('Choriozopella trägårdhi').should == 'CHORIOZOPELLA TRAGARDHI'
+    Taxamatch::Normalizer.normalize('×Zygomena').should == 'xZYGOMENA'
   end
 
   it 'should normalize words' do
