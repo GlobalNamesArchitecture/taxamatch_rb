@@ -2,17 +2,18 @@ source "http://rubygems.org"
 require 'yaml'
 # YAML::ENGINE.yamler= 'syck'
 
-gem "biodiversity19",">= 1.0.14"
+gem "biodiversity19",">= 1.0.16"
 gem "damerau-levenshtein", ">= 0.5.4"
 
 
 group :development do
+  gem "rake"
   gem "rake-compiler"
-  gem "rspec", "~> 2.3.0"
+  gem "rspec"
   gem "cucumber", ">= 0"
   gem "bundler", "~> 1.1.3"
   gem "jeweler", "~> 1.6.0"
-  gem "ruby-debug19"
+  gem "debugger"
   gem "ruby-prof"
   gem "shoulda"
   gem "mocha"
