@@ -2,7 +2,7 @@ source "http://rubygems.org"
 require 'yaml'
 # YAML::ENGINE.yamler= 'syck'
 
-gem "biodiversity19",">= 1.0.17"
+gem "biodiversity19",">= 1.0.18"
 gem "damerau-levenshtein", ">= 0.5.4"
 
 
