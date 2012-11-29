@@ -23,6 +23,10 @@ describe 'Atomizer' do
     future_year = Time.now.year + 10
     @parser.parse("Hydnellum scrobiculatum Kern #{future_year} zonatum (Banker) D. Hall et D.E. Stuntz 1972?").should == {:all_authors=>["KERN", "BANKER", "D HALL", "D E STUNTZ"], :all_years=>[1972], :canonical_form=>"Hydnellum scrobiculatum zonatum", :genus=>{:string=>"Hydnellum", :normalized=>"HYDNELLUM", :phonetized=>"HIDNILIM", :authors=>[], :years=>[], :normalized_authors=>[]}, :species=>{:string=>"scrobiculatum", :normalized=>"SCROBICULATUM", :phonetized=>"SCRABICILATA", :authors=>["Kern"], :years=>[], :normalized_authors=>["KERN"]}, :infraspecies=>[{:string=>"zonatum", :normalized=>"ZONATUM", :phonetized=>"ZANATA", :authors=>["Banker", "D. Hall", "D.E. Stuntz"], :years=>[1972], :normalized_authors=>["BANKER", "D HALL", "D E STUNTZ"]}]}
   end
+
+  it 'should normalize names with abbreviated genus after cf.' do
+    @parser.parse('Unio cf. U. alba').should == {:all_authors=>[], :all_years=>[], :canonical_form=>"Unio", :genus=>{:string=>"Unio", :normalized=>"UNIO", :phonetized=>"UNIA", :authors=>[], :years=>[], :normalized_authors=>[]}}
+  end
 end
 
 

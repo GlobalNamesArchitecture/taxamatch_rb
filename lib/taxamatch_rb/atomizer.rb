@@ -37,7 +37,7 @@ module Taxamatch
     private
 
     def process_node(name, node, is_species = false)
-      return unless node
+      return unless node && node[:string]
       @res[name] = {}
       @res[name][:string] = node[:string]
       @res[name][:normalized] = Taxamatch::Normalizer.normalize(node[:string])
