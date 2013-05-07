@@ -8,9 +8,9 @@ The purpose of Taxamatch gem is to facilitate fuzzy comparison of two scientific
     tm = Taxamatch::Base.new
     tm.taxamatch('Homo sapien', 'Homo sapiens') #returns true
     tm.taxamatch('Homo sapiens Linnaeus', 'Hommo sapens (Linn. 1758)') #returns true
-    tm.taxamatch('Homo sapiens Mozzherin', 'Homo sapiens Linnaeus') #returns false 
+    tm.taxamatch('Homo sapiens Mozzherin', 'Homo sapiens Linnaeus') #returns false
 
-Taxamatch_Rb is compatible with ruby versions 1.8.7 and 1.9.1 and higher
+Taxamatch_Rb is compatible with ruby versions 1.9.1 and higher
 
 == Installation
 
@@ -18,11 +18,10 @@ Taxamatch_Rb is compatible with ruby versions 1.8.7 and 1.9.1 and higher
 
 == Usage
 
-    require 'rubygems' #not needed for ruby > 1.9.1
     require 'taxamatch_rb'
 
     tm = Taxamatch::Base.new
-    
+
 * compare full scientific names
 
     tm.taxamatch('Hommo sapiens L.', 'Homo sapiens Linnaeus')
@@ -38,11 +37,11 @@ Taxamatch_Rb is compatible with ruby versions 1.8.7 and 1.9.1 and higher
     tm.taxamatch_preparsed(parsed_name1, parsed_name2)
 
 * compare genera
-    
+
     tm.match_genera('Monacanthus', 'MONOCANTUS')
 
 * compare species
-    
+
     tm.match_species('fronticinctus', 'frontecinctus')
 
 * compare authors and years
