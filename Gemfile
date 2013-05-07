@@ -4,6 +4,7 @@ require 'yaml'
 
 gem "biodiversity19","~> 2.1"
 gem "damerau-levenshtein", ">= 0.5.4"
+gem 'json', '~> 1.7.7'
 
 
 group :development do
