@@ -53,4 +53,4 @@ You can find more examples in spec section of the code
 
 == Copyright
 
-Copyright (c) 2009 Dmitry Mozzherin. See LICENSE for details.
+Copyright (c) 2009-2013 Marine Biological Laboratory. See LICENSE for details.
