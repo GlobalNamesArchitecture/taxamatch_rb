@@ -73,13 +73,16 @@ describe 'Atomizer' do
       :normalized_authors => [] } }
   end
 
-  # it 'should parse names which broke it before' do
-  #   ['Parus caeruleus species complex', 'Euxoa nr. idahoensis sp. 1clay',
-  #   'Cetraria islandica ? islandica', 'Buteo borealis ? ventralis'].each do |n|
-  #     require 'ruby-debug'; debugger
-  #     puts ''
-  #   end
-  # end
+  it 'should parse names which broke it before' do
+    ['Parus caeruleus species complex',
+     'Euxoa nr. idahoensis sp. 1clay',
+     'Cetraria islandica ? islandica',
+     'Buteo borealis ? ventralis'].each do |n|
+      res = @parser.parse(n)
+      res.class.should == Hash
+      res.empty?.should be_false
+    end
+  end
 end
 
 

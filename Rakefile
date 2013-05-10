@@ -5,7 +5,7 @@ begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
   $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  $stderr.puts 'Run `bundle install` to install missing gems'
   exit e.status_code
 end
 
@@ -14,21 +14,23 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "taxamatch_rb"
+    gem.name = 'taxamatch_rb'
     gem.summary = 'Implementation of Tony Rees Taxamatch algorithms'
-    gem.description = 'This gem implements algorithm for fuzzy matching scientific names developed by Tony Rees'
-    gem.email = "dmozzherin@eol.org"
-    gem.homepage = "http://github.com/GlobalNamesArchitecture/taxamatch_rb"
-    gem.authors = ["Dmitry Mozzherin"]
-    gem.files = FileList["[A-Z]*", "*.gemspec", "{bin,generators,lib,spec}/**/*"]
+    gem.description = 'This gem implements algorithm ' +
+      'for fuzzy matching scientific names developed by Tony Rees'
+    gem.email = 'dmozzherin@gmail.com'
+    gem.homepage = 'http://github.com/GlobalNamesArchitecture/taxamatch_rb'
+    gem.authors = ['Dmitry Mozzherin']
+    gem.files = FileList['[A-Z]*',
+      '*.gemspec', '{bin,generators,lib,spec}/**/*']
     gem.files -= FileList['lib/**/*.bundle', 'lib/**/*.dll', 'lib/**/*.so']
     gem.files += FileList['ext/**/*.c']
     gem.extensions = FileList['ext/**/extconf.rb']
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 
 rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
+  puts 'Jeweler (or a dependency) not available.' +
+  ' Install it with: sudo gem install jeweler'
 end
 
 require 'rspec/core'

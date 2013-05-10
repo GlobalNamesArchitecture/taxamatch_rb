@@ -2,11 +2,11 @@
 module Taxamatch
 
   module Phonetizer
-    
+
     def self.phonetize(a_word, normalize_ending = false)
       self.near_match(a_word, normalize_ending)
     end
-    
+
     def self.near_match(a_word, normalize_ending = false)
       a_word = a_word.strip rescue ''
       return '' if a_word == ''
@@ -50,7 +50,7 @@ module Taxamatch
           a_word = 'Z' + a_word[1..-1]
       end
       first_char = a_word.split('')[0]
-      rest_chars = a_word.split('')[1..-1].join('')   
+      rest_chars = a_word.split('')[1..-1].join('')
       rest_chars.gsub!('AE', 'I')
       rest_chars.gsub!('IA', 'A')
       rest_chars.gsub!('OE', 'I')
@@ -59,21 +59,22 @@ module Taxamatch
       rest_chars.gsub!('H', '')
       rest_chars.tr!('EOUYKZ', 'IAIICS')
       a_word = (first_char + rest_chars).squeeze
-    
+
       if normalize_ending && a_word.size > 4
         a_word = self.normalize_ending(a_word)
       end
       a_word
     end
-    
+
     def self.normalize_ending(a_word)
-        # -- deal with variant endings -is (includes -us, -ys, -es), -im (was -um), -as (-os)
+        # -- deal with variant endings
+        # -is (includes -us, -ys, -es), -im (was -um), -as (-os)
         # -- at the end of a string translate all to -a
         a_word.gsub!(/IS$/, 'A')
         a_word.gsub!(/IM$/, 'A')
         a_word.gsub(/AS$/, 'A')
     end
-  
+
   end
 
 end

@@ -1,16 +1,16 @@
 # encoding: UTF-8
 
 module Taxamatch
-  
+
   module Normalizer
     def self.normalize(string)
       utf8_to_ascii(string.strip.upcase).gsub(/[^\x00-\x7F]/,'?')
     end
-  
+
     def self.normalize_word(word)
       self.normalize(word).gsub(/[^A-Z0-9\-]/, '').strip
     end
-    
+
     def self.normalize_author(string)
       self.normalize(string).gsub(/[^A-Z]/, ' ').gsub(/[\s]{2,}/, ' ').strip
     end
@@ -20,7 +20,7 @@ module Taxamatch
       year_int = nil unless year_int.between?(1757, Time.now.year + 1)
       year_int
     end
-      
+
 
   private
     def self.utf8_to_ascii(string)
