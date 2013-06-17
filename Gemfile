@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 require 'yaml'
 
-gem 'biodiversity','~> 3.0.1'
+gem 'biodiversity','~> 3.1.0'
 gem 'damerau-levenshtein', '~> 0.5.4'
 gem 'json', '~> 1.7.7'
 
