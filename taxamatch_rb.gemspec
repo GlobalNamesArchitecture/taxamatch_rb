@@ -31,6 +31,4 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake", "~> 10.0"
   gem.add_development_dependency "rspec", "~> 2.1"
   gem.add_development_dependency "cucumber", "~> 1.3"
-  gem.add_development_dependency "shoulda", "~> 3.5"
-  gem.add_development_dependency "mocha", "~> 0.13"
 end
