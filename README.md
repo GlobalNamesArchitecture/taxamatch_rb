@@ -1,75 +1,39 @@
-Taxamatch_Rb
-============
+# TaxamatchRb
 
-[![Gem Version][1]][2]
-[![Continuous Integration Status][3]][4]
-[![Dependency Status][5]][6]
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/taxamatch_rb`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-Taxamatch_Rb is a ruby implementation of Taxamatch algorithms
-[developed by Tony Rees][7]:
+TODO: Delete this and the text above, and describe your gem
 
-The purpose of Taxamatch gem is to facilitate fuzzy comparison of
-two scientific name renderings to find out if they actually point to
-the same scientific name.
+## Installation
 
-    require 'taxamatch_rb'
-    tm = Taxamatch::Base.new
-    tm.taxamatch('Homo sapien', 'Homo sapiens') #returns true
-    tm.taxamatch('Homo sapiens Linnaeus', 'Hommo sapens (Linn. 1758)') #returns true
-    tm.taxamatch('Homo sapiens Mozzherin', 'Homo sapiens Linnaeus') #returns false
+Add this line to your application's Gemfile:
 
-Taxamatch_Rb is compatible with ruby versions 1.9.1 and higher
+```ruby
+gem 'taxamatch_rb'
+```
 
-Installation
-------------
+And then execute:
 
-    sudo gem install taxamatch_rb
+    $ bundle
 
-Usage
------
+Or install it yourself as:
 
-    require 'taxamatch_rb'
+    $ gem install taxamatch_rb
 
-    tm = Taxamatch::Base.new
+## Usage
 
-* compare full scientific names
+TODO: Write usage instructions here
 
-    tm.taxamatch('Hommo sapiens L.', 'Homo sapiens Linnaeus')
+## Development
 
-* preparse names for the matching (necessary for large databases of scientific names)
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
 
-    p = Taxamatch::Atomizer.new
-    parsed_name1 = p.parse('Monacanthus fronticinctus Günther 1867 sec. Eschmeyer 2004')
-    parsed_name2 = p.parse('Monacanthus fronticinctus (Gunther, 1867)')
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-* compare preparsed names
+## Contributing
 
-    tm.taxamatch_preparsed(parsed_name1, parsed_name2)
-
-* compare genera
-
-    tm.match_genera('Monacanthus', 'MONOCANTUS')
-
-* compare species
-
-    tm.match_species('fronticinctus', 'frontecinctus')
-
-* compare authors and years
-
-    Taxamatch::Authmatch.authmatch(['Linnaeus'], ['L','Muller'], [1786], [1787])
-
-
-You can find more examples in spec section of the code
-
-Copyright
----------
-
-Copyright (c) 2009-2013 Marine Biological Laboratory. See LICENSE for details.
-
-[1]: https://badge.fury.io/rb/taxamatch_rb.png
-[2]: http://badge.fury.io/rb/taxamatch_rb
-[3]: https://secure.travis-ci.org/GlobalNamesArchitecture/taxamatch_rb.png
-[4]: http://travis-ci.org/GlobalNamesArchitecture/taxamatch_rb
-[5]: https://gemnasium.com/GlobalNamesArchitecture/taxamatch_rb.png
-[6]: https://gemnasium.com/GlobalNamesArchitecture/taxamatch_rb
-[7]: http://www.cmar.csiro.au/datacentre/taxamatch.htm
+1. Fork it ( https://github.com/[my-github-username]/taxamatch_rb/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
