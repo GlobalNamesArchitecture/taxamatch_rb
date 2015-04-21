@@ -1,3 +1,5 @@
+1.1.1 - revert changes which changed API
+
 1.1.0 - create gem with bundle instead of jeweler, refactoring
 
 1.0.0 - fixed a parsing problem with infraspecies without string,
