@@ -1,6 +1,5 @@
 module Taxamatch
   class Base
-
     def initialize
       @parser = Taxamatch::Atomizer.new
       @dlm = DamerauLevenshtein
@@ -102,7 +101,7 @@ module Taxamatch
       sp2[:phonetized] = Taxamatch::Phonetizer.normalize_ending sp2[:phonetized]
       match = false
       ed = @dlm.distance(sp1[:normalized],
-                         sp2[:normalized], 1, 4) #TODO put block 4
+                         sp2[:normalized], 1, 4)
       return { 'edit_distance' => ed,
         'phonetic_match' => false,
         'match' => false } if ed/min_length.to_f > 0.3334
@@ -157,4 +156,3 @@ module Taxamatch
 
   end
 end
-
