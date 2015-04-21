@@ -37,6 +37,10 @@ Usage
 ```ruby
 require "taxamatch_rb"
 
+# To find version
+Taxamatch.version
+
+# To start new instance of taxamatch
 tm = Taxamatch::Base.new
 ```
 
