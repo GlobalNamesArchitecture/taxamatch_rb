@@ -1,0 +1,46 @@
+###
+#
+# Tests for string comparison by taxamatch algorithm
+# name1|name2|match|edit_distance
+#
+##
+# Comparing uninomials
+Pomatomus|Pomatomas|true|1
+Pomatomus L.|Pomatomas Linn.|true|1
+Pomatomus Ber|Pomatomas Linn|false|1
+Pomatomus L. 1758|Pomatomus Linn. 1800|false|0
+Patella|Abbella|false|3
+
+## additional authorship should match
+Puma concolor|Puma concolor L.|true|0
+#
+## one-letter misspeling in species epithet should match
+Puma concolor|Puma cancolor|true|1
+#
+Pomatomus saltatrix|Pomatomus saltratix|true|2
+Pomatomus saltator|Pomatomus saltatrix|false|3 #!!!
+#
+Loligo pealeii|Loligo plei|false|3
+#
+## different authors should not match
+Puma concolor Linnaeus|Puma concolor Kurtz|false|0
+#
+##real life examples
+Biatora borealis|Bactra borealis Diakonoff 1964|false|3
+#
+Homo sapien|Homo sapiens|true|1
+Homo sapiens Linnaeus|Homo sapens (Linn. 1758) |true|1
+Homo sapiens Mozzherin|Homo sapiens Linneaus|false|0
+#
+Quinqueloculina punctata|Quinqueloculina punctata d'Orbigny 1905|true|0
+Pomatomus saltator (Linnaeus, 1766)|Pomatomus saltatrix (Linnaeus, 1766)|true|0|3
+#
+#Trinomial names
+Homo sapiens stupidus|Homo spiens stupidus|true|1
+Pomatomus saltator saltator L. 1758|Pomatomus saltator var. saltatror L. 1758|true|1
+Pomatomus saltator L. 1758|Pomatomus saltator var. saltatror L. 1758|false|5
+Pomatomus saltator saltator saltatorische|Pomatomus saltator soltator|true|1
+
+
+
+
