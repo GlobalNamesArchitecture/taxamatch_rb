@@ -78,7 +78,7 @@ describe "Atomizer" do
      "Buteo borealis ? ventralis"].each do |n|
       res = @parser.parse(n)
       res.class.should == Hash
-      res.empty?.should be_false
+      expect(res.empty?).to be false
     end
   end
 end
@@ -396,7 +396,7 @@ describe "Taxamatch::Base" do
 
     it "should fuzzy match authors" do
       res = @am.fuzzy_match_authors("L", "Muller")
-      res.should be_false
+      expect(res).to be false
     end
 
   end
