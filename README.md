@@ -12,7 +12,7 @@ The purpose of Taxamatch gem is to facilitate fuzzy comparison of
 two scientific name renderings to find out if they actually point to
 the same scientific name.
 
-```Ruby
+```ruby
 require 'taxamatch_rb'
 tm = Taxamatch::Base.new
 tm.taxamatch('Homo sapien', 'Homo sapiens') #returns true
@@ -25,41 +25,56 @@ tm.taxamatch('Homo sapiens Mozzherin', 'Homo sapiens Linnaeus') #returns false
 Installation
 ------------
 
-    sudo gem install taxamatch_rb
+```bash
+$ sudo gem install taxamatch_rb
+```
 
 Usage
 -----
 
-    require 'taxamatch_rb'
+```ruby
+require "taxamatch_rb"
 
-    tm = Taxamatch::Base.new
+tm = Taxamatch::Base.new
+```
 
 * compare full scientific names
 
-    tm.taxamatch('Hommo sapiens L.', 'Homo sapiens Linnaeus')
+```ruby
+tm.taxamatch("Hommo sapiens L.", "Homo sapiens Linnaeus")
+```
 
 * preparse names for the matching (necessary for large databases of scientific names)
 
-    p = Taxamatch::Atomizer.new
-    parsed_name1 = p.parse('Monacanthus fronticinctus Günther 1867 sec. Eschmeyer 2004')
-    parsed_name2 = p.parse('Monacanthus fronticinctus (Gunther, 1867)')
+```ruby
+p = Taxamatch::Atomizer.new
+parsed_name1 = p.parse("Monacanthus fronticinctus Günther 1867 sec. Eschmeyer 2004")
+parsed_name2 = p.parse("Monacanthus fronticinctus (Gunther, 1867)")
+```
 
 * compare preparsed names
 
-    tm.taxamatch_preparsed(parsed_name1, parsed_name2)
+```ruby
+tm.taxamatch_preparsed(parsed_name1, parsed_name2)
+```
 
 * compare genera
 
-    tm.match_genera('Monacanthus', 'MONOCANTUS')
+```ruby
+tm.match_genera("Monacanthus", "MONOCANTUS")
+```
 
 * compare species
 
-    tm.match_species('fronticinctus', 'frontecinctus')
+```ruby
+tm.match_species("fronticinctus", "frontecinctus")
+```
 
 * compare authors and years
 
-    Taxamatch::Authmatch.authmatch(['Linnaeus'], ['L','Muller'], [1786], [1787])
-
+```ruby
+Taxamatch::Authmatch.authmatch(["Linnaeus"], ["L","Muller"], [1786], [1787])
+```
 
 You can find more examples in spec section of the code
 
