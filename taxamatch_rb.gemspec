@@ -24,11 +24,11 @@ Gem::Specification.new do |gem|
   end
 
   gem.add_runtime_dependency "biodiversity", "~> 3.1"
-  gem.add_runtime_dependency "damerau-levenshtein", "~> 0.5"
+  gem.add_runtime_dependency "damerau-levenshtein", "~> 1.0"
   gem.add_runtime_dependency "json", "~> 1.8"
 
   gem.add_development_dependency "bundler", "~> 1.6"
-  gem.add_development_dependency "rake", "~> 10.0"
-  gem.add_development_dependency "rspec", "~> 2.1"
-  gem.add_development_dependency "cucumber", "~> 1.3"
+  gem.add_development_dependency "rake", "~> 10.4"
+  gem.add_development_dependency "rspec", "~> 3.2"
+  gem.add_development_dependency "cucumber", "~> 2.0"
 end
