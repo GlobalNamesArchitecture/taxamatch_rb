@@ -1,53 +1,55 @@
 describe Taxamatch::Atomizer do
-  before(:all) do
-    @parser = Taxamatch::Atomizer.new
-  end
+  subject { Taxamatch::Atomizer.new }
 
-  it "should parse uninomials" do
-    @parser.parse("Betula").should == { all_authors: [], all_years: [],
+  it "parses uninomials" do
+    expect(subject.parse("Betula")).to eq(all_authors: [], all_years: [],
       canonical_form: "Betula", uninomial: { string: "Betula",
       normalized: "BETULA", phonetized: "BITILA", authors: [],
-      years: [], normalized_authors: [] } }
-    @parser.parse("Ærenea Lacordaire, 1872").should == {
+      years: [], normalized_authors: [] })
+
+    expect(subject.parse("Ærenea Lacordaire, 1872")).to eq(
       all_authors: ["LACORDAIRE"], all_years: [1872],
       canonical_form: "Aerenea", uninomial: { string: "Aerenea",
         normalized: "AERENEA", phonetized: "ERINIA",
         authors: ["Lacordaire"], years: [1872],
-        normalized_authors: ["LACORDAIRE"] } }
+        normalized_authors: ["LACORDAIRE"] })
   end
 
-  it "should parse binomials" do
-    @parser.parse("Leœptura laetifica Dow, 1913").should == {
+  it "parses binomials" do
+    expect(subject.parse("Leœptura laetifica Dow, 1913")).to eq(
       all_authors: ["DOW"], all_years: [1913],
       canonical_form: "Leoeptura laetifica", genus: {
       string: "Leoeptura", normalized: "LEOEPTURA",
       phonetized: "LIPTIRA", authors: [], years: [],
       normalized_authors: []}, species: {
-      string: "laetifica", normalized: "LAETIFICA",
-      phonetized: "LITIFICA", authors: ["Dow"],
-      years: [1913], normalized_authors: ["DOW"] } }
+        string: "laetifica", normalized: "LAETIFICA",
+        phonetized: "LITIFICA", authors: ["Dow"],
+        years: [1913], normalized_authors: ["DOW"] })
   end
 
-  it "should parse trinomials" do
-    @parser.parse("Hydnellum scrobiculatum zonatum " +
-                  "(Banker) D. Hall et D.E. Stuntz 1972").should ==  {
-      all_authors: ["BANKER", "D HALL", "D E STUNTZ"], all_years: [1972],
-      canonical_form: "Hydnellum scrobiculatum zonatum", :genus=>{
-      string: "Hydnellum", normalized: "HYDNELLUM",
-      phonetized: "HIDNILIM", authors: [], years: [],
-      normalized_authors: [] }, species: { string: "scrobiculatum",
-      normalized: "SCROBICULATUM", phonetized: "SCRABICILATA",
-      authors: [], years: [], normalized_authors: [] },
-      infraspecies: [{ string: "zonatum", normalized: "ZONATUM",
-      phonetized: "ZANATA", authors: ["Banker", "D. Hall", "D.E. Stuntz"],
-      years: [1972], normalized_authors: ["BANKER", "D HALL",
-      "D E STUNTZ"] }] }
+  it "parses trinomials" do
+    expect(subject.parse(
+      "Hydnellum scrobiculatum zonatum " \
+      "(Banker) D. Hall et D.E. Stuntz 1972")).to eq(
+        all_authors: ["BANKER", "D HALL", "D E STUNTZ"],
+        all_years: [1972], canonical_form: "Hydnellum scrobiculatum zonatum",
+        :genus=>{ string: "Hydnellum", normalized: "HYDNELLUM",
+                  phonetized: "HIDNILIM", authors: [], years: [],
+                  normalized_authors: [] }, 
+        species: { string: "scrobiculatum",
+                   normalized: "SCROBICULATUM", phonetized: "SCRABICILATA",
+                   authors: [], years: [], normalized_authors: [] },
+                   infraspecies: [{ string: "zonatum", normalized: "ZONATUM",
+                   phonetized: "ZANATA", 
+                   authors: ["Banker", "D. Hall", "D.E. Stuntz"],
+                   years: [1972], normalized_authors: ["BANKER", "D HALL",
+                                                       "D E STUNTZ"] }] )
   end
 
-  it "should normalize years to integers" do
+  it "normalizes years to integers" do
     future_year = Time.now.year + 10
-    @parser.parse("Hydnellum scrobiculatum Kern #{future_year} " +
-                  "zonatum (Banker) D. Hall et D.E. Stuntz 1972?").should == {
+    expect(subject.parse("Hydnellum scrobiculatum Kern #{future_year} " +
+           "zonatum (Banker) D. Hall et D.E. Stuntz 1972?")).to eq(
       all_authors: ["KERN", "BANKER", "D HALL", "D E STUNTZ"],
       all_years: [1972],
       canonical_form: "Hydnellum scrobiculatum zonatum", genus: {
@@ -59,25 +61,26 @@ describe Taxamatch::Atomizer do
       infraspecies: [{ string: "zonatum", normalized: "ZONATUM",
       phonetized: "ZANATA", authors:
       ["Banker", "D. Hall", "D.E. Stuntz"], years: [1972],
-      normalized_authors: ["BANKER", "D HALL", "D E STUNTZ"] }] }
+      normalized_authors: ["BANKER", "D HALL", "D E STUNTZ"] }]) 
   end
 
-  it "should normalize names with abbreviated genus after cf." do
-    @parser.parse("Unio cf. U. alba").should == { all_authors: [],
+  it "normalizes names with abbreviated genus after cf." do
+    expect(subject.parse("Unio cf. U. alba")).to eq(all_authors: [],
       all_years: [], canonical_form: "Unio",
       genus: { string: "Unio", normalized: "UNIO",
       phonetized: "UNIA", authors: [], years: [],
-      normalized_authors: [] } }
+      normalized_authors: [] }) 
   end
 
-  it "should parse names which broke it before" do
-    ["Parus caeruleus species complex",
+  it "parses names which broke it before" do
+    ["Chaetomorpha linum (O.F. Müller) Kützing",
+     "Parus caeruleus species complex",
      "Euxoa nr. idahoensis sp. 1clay",
      "Cetraria islandica ? islandica",
      "Buteo borealis ? ventralis"].each do |n|
-      res = @parser.parse(n)
-      res.class.should == Hash
-      expect(res.empty?).to be false
+       res = subject.parse(n)
+       expect(res).to be_kind_of(Hash)
+       expect(res.empty?).to be false
     end
   end
 end

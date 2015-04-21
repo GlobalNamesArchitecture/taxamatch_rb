@@ -1,9 +1,12 @@
 require "coveralls"
 Coveralls.wear!
-
 require "rspec"
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "taxamatch_rb"
+
+RSpec.configure do |config|
+  config.raise_errors_for_deprecations!
+end
 
 def read_test_file(file, fields_num)
   f = open(file)

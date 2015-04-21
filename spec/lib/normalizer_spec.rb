@@ -1,19 +1,21 @@
-describe "Taxamatch::Normalizer" do
-  it "should normalize  strings" do
-    Taxamatch::Normalizer.normalize("abcd").should == "ABCD"
-    Taxamatch::Normalizer.normalize("Leœptura").should == "LEOEPTURA"
-    Taxamatch::Normalizer.normalize("Ærenea").should == "AERENEA"
-    Taxamatch::Normalizer.normalize("Fallén").should == "FALLEN"
-    Taxamatch::Normalizer.normalize("Fallé€n").should == "FALLE?N"
-    Taxamatch::Normalizer.normalize("Fallén привет").should == "FALLEN ??????"
-    Taxamatch::Normalizer.normalize("Choriozopella trägårdhi").should ==
-      "CHORIOZOPELLA TRAGARDHI"
-    Taxamatch::Normalizer.normalize("×Zygomena").should == "xZYGOMENA"
+describe Taxamatch::Normalizer do
+  it "normalizes  strings" do
+    [
+      ["abcd", "ABCD"],
+      ["Leœptura", "LEOEPTURA"],
+      ["Ærenea", "AERENEA"],
+      ["Fallén", "FALLEN"],
+      ["Fallé€n", "FALLE?N"],
+      ["Fallén привет", "FALLEN ??????"],
+      ["Choriozopella trägårdhi", "CHORIOZOPELLA TRAGARDHI"],
+      ["×Zygomena", "xZYGOMENA"]
+    ].each do |input, output|
+      expect(subject.normalize(input)).to eq output
+    end
   end
 
-  it "should normalize words" do
-    Taxamatch::Normalizer.normalize_word("L-3eœ|pt[ura$").should ==
-      "L-3EOEPTURA"
+  it "normalizes words" do
+    expect(subject.normalize_word("L-3eœ|pt[ura$")).to eq "L-3EOEPTURA"
   end
 end
 

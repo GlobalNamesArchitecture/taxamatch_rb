@@ -1,12 +1,10 @@
 module Taxamatch
-
   class Base
 
     def initialize
       @parser = Taxamatch::Atomizer.new
       @dlm = DamerauLevenshtein
     end
-
 
     # takes two scientific names and returns true
     # if names match and false if they don't
