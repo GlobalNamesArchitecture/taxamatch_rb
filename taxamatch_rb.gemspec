@@ -5,7 +5,7 @@ require 'taxamatch_rb/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "taxamatch_rb"
-  gem.version       = TaxamatchRb::VERSION
+  gem.version       = Taxamatch::VERSION
   gem.authors       = ["Dmitry Mozzherin"]
   gem.email         = ["dmozzherin@gmail.com"]
 
