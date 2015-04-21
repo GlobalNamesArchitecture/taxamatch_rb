@@ -1,9 +1,8 @@
 rvm:
-  - 1.9.3
-  - 2.0.0
-bundler_args: --without development
+  - 2.0
+  - 2.1
+  - 2.2
 script:
-  - bundle exec cucumber
   - bundle exec rake
 branches:
   only:
