@@ -3,10 +3,12 @@ taxamatch_rb
 
 [![Gem Version][1]][2]
 [![Continuous Integration Status][3]][4]
-[![Dependency Status][5]][6]
+[![Coverage Status][5]][6]
+[![CodePolice][7]][8]
+[![Dependency Status][8]][9]
 
 `taxamatch_rb` is a ruby implementation of Taxamatch algorithms
-[developed by Tony Rees][7]:
+[developed by Tony Rees][10]:
 
 The purpose of Taxamatch gem is to facilitate fuzzy comparison of
 two scientific name renderings to find out if they actually point to
@@ -87,6 +89,10 @@ Copyright (c) 2009-2015 Marine Biological Laboratory. See LICENSE for details.
 [2]: http://badge.fury.io/rb/taxamatch_rb
 [3]: https://secure.travis-ci.org/GlobalNamesArchitecture/taxamatch_rb.png
 [4]: http://travis-ci.org/GlobalNamesArchitecture/taxamatch_rb
-[5]: https://gemnasium.com/GlobalNamesArchitecture/taxamatch_rb.png
-[6]: https://gemnasium.com/GlobalNamesArchitecture/taxamatch_rb
-[7]: http://www.cmar.csiro.au/datacentre/taxamatch.htm
+[5]: https://coveralls.io/repos/GlobalNamesArchitecture/taxamatch_rb/badge.png
+[6]: https://coveralls.io/r/GlobalNamesArchitecture/taxamatch_rb
+[7]: https://codeclimate.com/github/GlobalNamesArchitecture/taxamatch_rb.png
+[8]: https://codeclimate.com/github/GlobalNamesArchitecture/taxamatch_rb
+[8]: https://gemnasium.com/GlobalNamesArchitecture/taxamatch_rb.png
+[9]: https://gemnasium.com/GlobalNamesArchitecture/taxamatch_rb
+[10]: http://www.cmar.csiro.au/datacentre/taxamatch.htm
