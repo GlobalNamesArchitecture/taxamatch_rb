@@ -1,3 +1,5 @@
+1.1.0 - create gem with bundle instead of jeweler, refactoring
+
 1.0.0 - fixed a parsing problem with infraspecies without string,
 upgraded version to 1 because the signature of the gem did stabilized
 
