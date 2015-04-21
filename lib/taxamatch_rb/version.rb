@@ -1,3 +1,3 @@
-module TaxamatchRb
-  VERSION = "0.1.0"
+module Taxamatch
+  VERSION = "1.1.0"
 end
