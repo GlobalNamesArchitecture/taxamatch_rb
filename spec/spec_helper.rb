@@ -1,5 +1,5 @@
-require "coverals"
-Coverals.wear!
+require "coveralls"
+Coveralls.wear!
 
 require "rspec"
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
