@@ -9,19 +9,18 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Dmitry Mozzherin"]
   gem.email         = ["dmozzherin@gmail.com"]
 
-  gem.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  gem.description   = %q{TODO: Write a longer description or delete this line.}
-  gem.homepage      = "TODO: Put your gem's website or public repo URL here."
+  gem.summary       = %q{Fuzzy matching of scientific names}
+  gem.description   = "The purpose of Taxamatch gem is to facilitate fuzzy" \
+                      "comparison of two scientific name renderings to find" \
+                      "out if they actually point to the same scientific name."
+  gem.homepage      = "https://github.com/GlobalNamesArchitecture/taxamatch_rb"
   gem.license       = "MIT"
 
-  gem.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  gem.files         = `git ls-files -z`.split("\x0").
+                      reject { |f| f.match(%r{^(test|spec|features)/}) }
   gem.bindir        = "exe"
   gem.executables   = gem.files.grep(%r{^exe/}) { |f| File.basename(f) }
   gem.require_paths = ["lib"]
-
-  if gem.respond_to?(:metadata)
-    gem.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
 
   gem.add_runtime_dependency "biodiversity", "~> 3.1"
   gem.add_runtime_dependency "damerau-levenshtein", "~> 1.0"
