@@ -1,6 +1,7 @@
 taxamatch_rb
 ============
 
+[![DOI](https://zenodo.org/badge/19435/GlobalNamesArchitecture/taxamatch_rb.svg)](https://zenodo.org/badge/latestdoi/19435/GlobalNamesArchitecture/taxamatch_rb)
 [![Gem Version][1]][2]
 [![Continuous Integration Status][3]][4]
 [![Coverage Status][5]][6]
