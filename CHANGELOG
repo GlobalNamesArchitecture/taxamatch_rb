@@ -1,3 +1,5 @@
+1.1.2 - release to create DOI
+
 1.1.1 - revert changes which changed API
 
 1.1.0 - create gem with bundle instead of jeweler, refactoring
